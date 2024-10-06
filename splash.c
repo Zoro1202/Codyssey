@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <windows.h>
 
 void printha(int n, const char *printSomthing, char a);
 
@@ -24,21 +23,21 @@ int main(){
     printha(3, "            마그라테아에 오신걸 환영합니다.                                ", '*');
     printha(4, "                                                                           ", '*');
     printf("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
-    printf("[사용자]: %s                                   [실행 시간]:",input2);
+    printf("[사용자]: %s                                   [실행 시간]: ",input2);
 
-    char *temp = strtok(input, "-");
-    int count = 0;
+    char *temp = strtok(input, "-"); // - 기준 첫번째 문자열 일부 temp가 가르킴
+    int count = 0; //count마다 년월일 출력
 
     while (temp != NULL)
         {
-            if(count == 0)
+            if(count == 0) // temp가 가르키고 있는 문자열 출력 후 년 or 월 or 일 출력.
                 printf("%s년 ", temp);
             else if(count == 1)
                 printf("%s월 ", temp);
             else if(count == 2)
                 printf("%s일 ", temp);
             else;
-            temp = strtok(NULL, "-");
+            temp = strtok(NULL, "-"); // 이전 문자열의 나머지를 처리. 다음 문자열 일부를 temp가 가르키고 처리. 더 이상 구분자(-)가 없을 경우 NULL 반환
             count++;
         }
     
