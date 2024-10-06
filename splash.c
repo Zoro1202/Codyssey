@@ -2,15 +2,17 @@
 #include <stdlib.h>
 #include <windows.h>
 
+void printha(int n, const char *printSomthing, char a);
+
 int main(){
     char input[32];
     char input2[64];
 
-    printf("[현재 날짜를 \"yyyy-mm-dd\" 형식으로 입력하세요]: ");
-    scanf("%s", &input);
+1234-    printf("[현재 날짜를 \"yyyy-mm-dd\" 형식으로 입력하세요]: ");
+    scanf("%s", input);
 
     printf("[당신의 이름을 입력하세요]: ");
-    scanf("%s", &input2);
+    scanf("%s", input2);
 
     printf("**입력이 정상적으로 처리되었습니다.**\n");
     
@@ -40,7 +42,7 @@ int main(){
             count++;
         }
     
-    printf("\n================================================================================");
+    printf("\n=================================================================================");
 
 }
 
@@ -48,7 +50,7 @@ void printha(int n, const char *printSomthing, char a){
     for (int i = 0; i <= n; i++) {
         printf("%c",a);
     }
-        printf(printSomthing);
+        printf("%s", printSomthing);
     for (int i = 5; i > n; i--){
         printf("%c",a);
     }
