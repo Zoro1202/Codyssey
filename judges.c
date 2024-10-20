@@ -67,7 +67,7 @@ int main(){
             judges_array[index++] = c;
         }
         //judges_array[index++] = '\0'; // 뭔가 다른 문자 넣어야함. 이거때매 파싱이 여러번 안됨. 아무도 안쓸거같은 문자뭐있지
-        judges_array[index++] = -65;
+        judges_array[index++] = 255;
     }
 
     //심사자 정보 입력 끝.
@@ -93,7 +93,7 @@ int main(){
         char *token = judges_array;
         for(int i = 0; i < select_member; i++){
             printf("[심사자 %d]", i+1);
-            while (token[index] != '\0' && token[index] != -65){ 
+            while (token[index] != '\0' && token[index] != 255){ 
                 if(token[index] == '\"' || token[index] == ','){ 
                     token[index] = '\0'; // '\"' 랑 ',' 구분 해서 문자열 끊기
                     printf("%s\n", token); // 끊어진 문자열 출력 test
@@ -103,8 +103,8 @@ int main(){
                     index++;
                 }
             }
-            if(token[index] == -65){
-                token[index] = '\0'; // 대충 \t(안쓸거같은 문자)이 다음 심사자와 구분하는 문자임.
+            if(token[index] == 255){
+                token[index] = '\0'; // 대충 255(안쓸거같은 문자)이 다음 심사자와 구분하는 문자임.
                 printf("-----------------------------------\n", token); // 벽
                 token = token + index + 1; // 다음 문자열로 이동 ㄱㄱ
                 index = 0; // 인덱스 초기화
