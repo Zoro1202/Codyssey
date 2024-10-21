@@ -19,7 +19,7 @@ int main(){
         project_name[index++] = c;
     }
     project_name[index] = '\0'; //  뒤에 null문자 넣어서 오 류 해결
-    printf("%s", project_name); // test
+    //printf("%s", project_name); // test
     //심사 풀 인원 입력받기
     printf("> 심사 풀 인원: ");
     scanf("%d", &judges_pool);
@@ -115,8 +115,6 @@ int main(){
 
     //메모리 해제
     free(judges_array);
-
-    printf("\n");
 
     return 0;
 }
