@@ -3,17 +3,18 @@
 #include "stdio.h"
 #include "stdlib.h"
 
-//닉네임 : Ariel , 학력 : 중졸 , 키 : 175cm , 몸무게 : 60 , 혈액형 : A , 알러지 : 땅콩 , 취미 : 댄스 연습 작곡 , SNS : Instagram - @Ariel_Kim
+#define FIELDLEN 20
+//정해진 형식이 아니면 안됨 되긴하는데 안됨
 //"이름:박지연,생년월일:20060415,성별:여,이메일:jiyeon@outlook.com,국적:한국BMI:18.5,주특기:댄스,보조특기:작곡,한국어등급:0,MBTI:ENFJ,ID:123456,합격여부:O"
+//"이름:박지연,닉네임:Ariel,학력:중졸,키:175cm,몸무게:60,혈액형:A,알러지:땅콩,취미:댄스연습작곡,SNS:Instagram-@Ariel_Kim"
 typedef struct{
-    char *name;
-    char *birth;
-    char *sex;
-    char *email;
-    char *country;
-    //char 
-} user_data;
-// 아이디어 : 따로 변수를 만들지 않고 그냥 주소값만 저장해놓고 쓰면, 메모리를 아낄수있지않나?
+    //이름, 생일, 성별, 이메일, 국적, 특기, 보조특기, 한국어등급, 엠비티아이, 아이디, 합격여부 
+    char *name, *birth, *sex, *email, *country, *skill, *sub, *kor, *mbti, *id, *pass;
+    // 추가: 이름, 닉네임, 학력, 키(m), 몸무게(kg), 혈액형, 알러지, 취미, SNS
+    char *pname, *aka, *grade, *tall, *weight, *abo, *allergy, *hobby, *sns;
+    //char *
+} user_field;
+// 아이디어 : 따로 변수를 만들지 않고 그냥 원래 배열의 주소값만 저장해놓고 쓰면, 메모리를 아낄수있지않나?
 //파싱해서 \0을 넣은 값을 저장할거니까 print를 할거면 그냥 순서대로 받으니까 순서대로 나가게 걍 어쩌고 저쩌고
 
 // TEST 용 "이름:박지연,생년월일:20060415,성별:여,이메일:jiyeon@outlook.com,국적:한국"
@@ -50,33 +51,6 @@ void input_candidates(char **candidate){
     (*candidate)[index] = '\0'; // 문자열 끝에 null 문자 추가
 }
 
-// TEST 용 "이름:박지연,생년월일:20060415,성별:여,이메일:jiyeon@outlook.com,국적:한국"
-user_data data_parsing(char *candidate){
-    
-    user_data userdata;
-    int field_index = 0;
-    char **field[5] = {&userdata.name,&userdata.birth,&userdata.sex,&userdata.email,&userdata.country};
-    int index = 0;
-
-    // 구분자 검사하고 머 문자열 구분 해주는 포인터 저장 변수임
-    char *token = candidate;
-    printf("[TEST]\n");
-    while (token[index] != '\0'){ 
-        if(token[index] == '\"' || token[index] == ','){ 
-            token[index] = '\0'; // '\"' 랑 ',' 구분 해서 문자열 끊기
-            printf("%s\n", token); // 끊어진 문자열 출력 test
-            if(field_index < 6 && (token[0] != '\0')){ //빈 값이 들어가버림 방지.. 
-                *field[field_index++] = token; // 끊은 문자열 처음 주소 넣기
-            }
-            token = token + index + 1; // 다음 문자열로 이동 ㄱㄱ
-            index = 0;
-        } else {
-            index++;
-        }
-    }
-    printf("%s\n", token);
-    return userdata;
-}
 
 //문자열 길이 계산
 int get_length(char *str){
@@ -126,10 +100,47 @@ void merge_candidate(char *candidate, char **milliways){
 }
 
 // TEST 용 "이름:박지연,생년월일:20060415,성별:여,이메일:jiyeon@outlook.com,국적:한국"
+user_field data_parsing(char *candidate){
+    
+    user_field ud;
+    int field_index = 0;
+    char **field[FIELDLEN] = {
+        &ud.name,&ud.birth,&ud.sex,&ud.email,&ud.country,&ud.skill,&ud.sub,&ud.kor,&ud.mbti,&ud.id,&ud.pass,
+        &ud.pname, &ud.aka, &ud.grade, &ud.tall, &ud.weight, &ud.abo, &ud.allergy, &ud.hobby, &ud.sns
+    };
+    int index = 0;
+
+    // 구분자 검사하고 머 문자열 구분 해주는 포인터 저장 변수임
+    char *token = candidate;
+    printf("[TEST]\n");
+    while (token[index] != '\0'){ 
+        if(token[index] == '\"' || token[index] == ','){ 
+            token[index] = '\0'; // '\"' 랑 ',' 구분 해서 문자열 끊기
+            printf("%s\n", token); // 끊어진 문자열 출력 test
+            if(field_index < FIELDLEN && (token[0] != '\0')){ //빈 값이 들어가버림 방지..
+                *field[field_index++] = token; // 끊은 문자열 처음 주소 넣기
+            }
+            token = token + index + 1; // 다음 문자열로 이동 ㄱㄱ
+            index = 0; 
+        } else {
+            index++;
+        }
+    }
+    printf("%s\n", token);
+    return ud;
+}
+
+void print_milliways(user_field userdata){
+    printf("%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s", 
+        userdata.name,userdata.birth,userdata.sex,userdata.email,userdata.country,userdata.skill,userdata.sub,userdata.kor,userdata.mbti,userdata.id,userdata.pass,
+        userdata.pname, userdata.aka, userdata.grade, userdata.tall, userdata.weight, userdata.abo, userdata.allergy, userdata.hobby, userdata.sns);
+}
+
+// TEST 용 "이름:박지연,생년월일:20060415,성별:여,이메일:jiyeon@outlook.com,국적:한국"
 int main(){
     // 문제 3의 후보자 6명의 데이터(소개는 제외)에 후보자 고유 ID(문제 5에서 생성), 합격 여부가 포함된 JSON 형식의 문자열을 담은 배열 candidate##_arr로 작성한다.
     char *candidate00_arr;
-    user_data candidate0_poss;
+    user_field candidate0_poss;
     char *milliways00_arr;
 //    char *candidate01_arr;
 //    char *candidate02_arr;
@@ -147,7 +158,7 @@ int main(){
 
 
     // TEST
-    printf("%s, %s, %s, %s, %s", candidate0_poss.name,candidate0_poss.birth,candidate0_poss.sex,candidate0_poss.email,candidate0_poss.country);
+    print_milliways(candidate0_poss);
 //    char *milliways01_arr;
 //    char *milliways02_arr;
 //    char *milliways03_arr;
