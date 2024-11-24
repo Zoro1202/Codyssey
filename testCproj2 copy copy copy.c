@@ -25,7 +25,7 @@ typedef struct Transaction {
 
 typedef struct User {
     char name[50];
-    char accountNumber[11];
+    char accountNumber[14];
     char openDate[20];
     long long balance;
     Transaction history[MAX_HISTORY];
@@ -59,9 +59,14 @@ void DrawUIBorder() {
     printf("\n");
 }
 
-void PrintCenteredText(int row, const char *text) {
+void PrintCenteredText(int row, char *text) {
     int padding = (WIDTH - strlen(text)) / 2;
     printf("\033[%d;%dH%s", row, padding, text);
+    char buffer[25];
+    time_t t = time(NULL);
+    struct tm *tm_info = localtime(&t);
+    strftime(buffer, 20, "%Y-%m-%d [%A]", tm_info);
+    printf("\033[%d;%dH%s", row+1, WIDTH-26, buffer);
 }
 
 void GetCurrentDate(char *buffer) {
@@ -119,9 +124,16 @@ void AddUser() {
     printf("\033[%d;%dH고객 이름 입력: ", HEIGHT - 2, WIDTH - 30);
     fgets(name, sizeof(name), stdin);
     name[strcspn(name, "\n")] = 0;
-
+    
     strcpy(users[userCount].name, name);
-    sprintf(users[userCount].accountNumber, "%010d", userCount + 1);
+
+    srand(userCount);
+    long long rn = rand() % (9999999 + 1 - 1000000) + 1000000; // 7자리 랜덤한 수
+    rn += 2403240000000; //년도까지 걍 대충  // 수정 하던지 하고 지금은 그냥 상수로 받자
+
+    //계좌 번호 생성할 때, 랜덤으로 받기 2403 - 24 - 1234567
+    //rand() % (max_number + 1 - minimum_number) + minimum_number
+    sprintf(users[userCount].accountNumber, "%013lld", rn);
     GetCurrentDate(users[userCount].openDate);
     users[userCount].balance = 0;
     users[userCount].historyCount = 0;
@@ -233,13 +245,13 @@ void PrintUserMenu() {
     char formattedBalance[50];
     FormatNumberWithCommas(formattedBalance, user->balance);
 
-    printf("\033[4;5H계좌번호: %s", user->accountNumber);
-    printf("\033[5;5H개설일: %s", user->openDate);
-    printf("\033[6;5H현재 잔액: ₩%s", formattedBalance);
-    printf("\033[8;5H입금: Q, 출금: E, 이체: D, 뒤로가기: A + Enter");
+    printf("\033[4;7H계좌번호: %s", user->accountNumber);
+    printf("\033[5;7H개설일: %s", user->openDate);
+    printf("\033[6;7H현재 잔액: ₩%s", formattedBalance);
+    printf("\033[%d;%dH입금: Q, 출금: E, 이체: D, 뒤로가기: A + Enter", HEIGHT - 1, 2);
 
     int visibleLines = HEIGHT - 12;  // 화면에 표시 가능한 히스토리 줄 수
-    int startRow = 10;
+    int startRow = 8;
 
     // 히스토리 출력
     for (int i = 0; i < visibleLines; i++) {
