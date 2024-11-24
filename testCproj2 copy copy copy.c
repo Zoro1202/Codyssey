@@ -5,9 +5,13 @@
 #include <time.h>
 #include <windows.h>
 
+// 최대 계좌 수
 #define MAX_USERS 100
+// 최대 히스토리 갯수
 #define MAX_HISTORY 20
+// 폭
 #define WIDTH 120
+// 높이
 #define HEIGHT 25
 
 #define FILENAME "accounts.json"
@@ -62,7 +66,7 @@ void PrintCenteredText(int row, const char *text) {
 
 void GetCurrentDate(char *buffer) {
     time_t t = time(NULL);
-    struct tm *tm_info = localtime(&t);
+    struct tm *tm_info = localtime(&t); //컴퓨터 시간
     strftime(buffer, 20, "%Y-%m-%d %H:%M", tm_info);
 }
 
@@ -287,6 +291,7 @@ void HandleTransfer(User *from) {
 }
 
 void HandleTransaction(User *user, int isDeposit) {
+    char input[50];
     long long amount;
     ClearScreen();
     DrawUIBorder();
@@ -298,10 +303,23 @@ void HandleTransaction(User *user, int isDeposit) {
     printf("%s", formattedBalance);
 
     printf("\033[%d;%dH금액 입력: ", HEIGHT - 2, WIDTH - 30);
-    scanf("%lld", &amount);
-    getchar();  // 개행 문자 제거
+    fgets(input, sizeof(input), stdin); // 입력을 문자열로 받음
+    input[strcspn(input, "\n")] = '\0'; // 개행 문자 제거
+    // 1234a -> 1234a \0
+    int isNum = 0;
+        // 받은 문자열의 끝까지 검사. , 숫자 이외의 문자가 나오면 isNum = 0으로 바꿈.
+    for(int i = 0; input[i] != '\0' ; i ++){
+            // 48 <= input[i] <= 57
+        if((input[i] >= '0' && input[i] <= '9'))
+            isNum = 1;
+        else if(!(input[i] >= '0' && input[i] <= '9')){
+            isNum = 0;
+            break;
+        }
+    }
 
-    if (amount <= 0) {
+    // TODO - 0 이하일때 예외 처리 말고 문자 값이 들어왔을 때도 처리.
+    if ((isNum == 0) || (sscanf(input, "%lld", &amount) != 1 || amount <= 0)) {
         printf("\033[%d;%dH유효한 금액을 입력하세요.", HEIGHT - 3, WIDTH - 30);
         Sleep(2000);
         return;
