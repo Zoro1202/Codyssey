@@ -26,10 +26,10 @@ typedef struct Transaction {
 typedef struct User {
     char name[50];
     char accountNumber[14];
-    char openDate[20];
-    long long balance;
-    Transaction history[MAX_HISTORY];
-    int historyCount;
+    char openDate[20]; //계좌 개설 날짜
+    long long balance; // 현재 돈
+    Transaction history[MAX_HISTORY]; // 기록들
+    int historyCount; // 기록의 개수
 } User;
 
 User users[MAX_USERS];
@@ -41,10 +41,12 @@ int menuState = 0;  // 0: 메인 메뉴, 1: 사용자 상세 메뉴
 int historyOffset = 0;  // 히스토리 표시 시작 인덱스
 int historyCursor = 0;   // 현재 커서 위치
 
+// 화면 지우기
 void ClearScreen() {
     system("cls");  // 콘솔 화면 지우기
 }
 
+//사각형 그리기
 void DrawUIBorder() {
     for (int i = 0; i < WIDTH; i++) printf("=");
     printf("\n");
@@ -59,9 +61,8 @@ void DrawUIBorder() {
     printf("\n");
 }
 
-void PrintCenteredText(int row, char *text) {
-    int padding = (WIDTH - strlen(text)) / 2;
-    printf("\033[%d;%dH%s", row, padding, text);
+// 타이틀 옆에 시간 출력
+void PrintCurrentDate(int row){
     char buffer[25];
     time_t t = time(NULL);
     struct tm *tm_info = localtime(&t);
@@ -69,12 +70,22 @@ void PrintCenteredText(int row, char *text) {
     printf("\033[%d;%dH%s", row+1, WIDTH-26, buffer);
 }
 
+// 타이틀 출력
+void PrintCenteredText(int row, char *text) {
+    int padding = (WIDTH - strlen(text)) / 2;
+    printf("\033[%d;%dH%s", row, padding, text); // \033[%d;%dH 열 , 행
+    PrintCurrentDate(row);
+}
+
+
+//현재 시간 저장
 void GetCurrentDate(char *buffer) {
     time_t t = time(NULL);
     struct tm *tm_info = localtime(&t); //컴퓨터 시간
     strftime(buffer, 20, "%Y-%m-%d %H:%M", tm_info);
 }
 
+//천의 자리 숫자마다 콤마 찍기
 void FormatNumberWithCommas(char *buffer, long long number) {
     char temp[50];
     sprintf(temp, "%lld", number);
@@ -97,6 +108,7 @@ void FormatNumberWithCommas(char *buffer, long long number) {
     }
 }
 
+// 히스토리 추가하기
 void AddTransaction(User *user, long long amount, const char *description) {
     if (user->historyCount >= MAX_HISTORY) {
         // 가장 오래된 기록 삭제 queue, FIFO
@@ -114,6 +126,7 @@ void AddTransaction(User *user, long long amount, const char *description) {
     user->historyCount++;  // 기록 수 증가
 }
 
+// 계좌 개설
 void AddUser() {
     if (userCount >= MAX_USERS) return;
 
@@ -141,6 +154,7 @@ void AddUser() {
     userCount++;
 }
 
+//유저 정렬 // 돈 많은 순서
 void SortUsers() {
     User temp;
     for (int i = 0; i < userCount - 1; i++) {
@@ -155,6 +169,7 @@ void SortUsers() {
     }
 }
 
+// 유저 -> 유저 돈 보내기
 void TransferMoney(User *from, User *to) {
     long long amount;
     ClearScreen();
@@ -199,6 +214,7 @@ void TransferMoney(User *from, User *to) {
 
 }
 
+//메인 메뉴 출력
 void PrintMainMenu() {
     ClearScreen();
     DrawUIBorder();
@@ -235,6 +251,7 @@ void PrintMainMenu() {
     printf("\033[%d;%dHW: 위로 이동, S: 아래로 이동, Enter: 선택", HEIGHT - 1, 2);
 }
 
+//유저 메뉴 출력
 void PrintUserMenu() {
     ClearScreen();
     DrawUIBorder();
@@ -280,6 +297,7 @@ void PrintUserMenu() {
     }
 }
 
+// 송금 유저 선택 화면
 void HandleTransfer(User *from) {
     int targetIndex;
     ClearScreen();
@@ -302,6 +320,7 @@ void HandleTransfer(User *from) {
     TransferMoney(from, &users[targetIndex - 1]);
 }
 
+// 입출금 화면
 void HandleTransaction(User *user, int isDeposit) {
     char input[50];
     long long amount;
@@ -361,6 +380,7 @@ void HandleTransaction(User *user, int isDeposit) {
     }
 }
 
+// JSON파일 저장 / 로드
 void SaveAccountsToFile(const char *filename) {
     FILE *file = fopen(filename, "w");
     if (!file) return;
