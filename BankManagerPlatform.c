@@ -191,7 +191,44 @@ int HandleStringInput(char *buffer, int bufferSize)
         }
     }
 }
+/** 문자열 입력 - 비밀번호용
+ * @param buffer 입력받을 배열
+ * @param bufferSize 사이즈
+ * @return 입력취소 = -1, 엔터키 = 0
+ */
+int HandleHiddenStringInput(char *buffer, int bufferSize)
+{
+    int pos = 0;
 
+    while (1)
+    {
+        char c = _getch(); // 키 입력 감지
+
+        if (c == 27) // ESC 키
+        {
+            return -1; // 취소를 나타내는 값 반환
+        }
+        else if (c == '\r') // Enter 키
+        {
+            buffer[pos] = '\0'; // 문자열 종료
+            return 0; // 정상 입력 완료
+        }
+        else if (c >= ' ' && c <= '~') // 일반 문자 입력 (ASCII 범위)
+        {
+            if (pos < bufferSize - 1)
+            {
+                buffer[pos++] = c;
+                printf("*"); // 화면에 출력
+            }
+        }
+        else if (c == 8 && pos > 0) // Backspace 처리
+        {
+            pos--;
+            printf("\b \b"); // 화면에서 문자 제거
+        }
+    }
+}
+ 
 // 현재 시간 저장
 // @param buffer "YYYY-MM-DD HH:MM"
 void GetCurrentDateTIME(char *buffer)
@@ -868,7 +905,7 @@ int UserLoginToAccount()
         }
 
         printf("\033[5;5H비밀번호 입력 (ESC로 취소): ");
-        if (HandleStringInput(password, sizeof(password)) == -1) // ESC 입력 처리
+        if (HandleHiddenStringInput(password, sizeof(password)) == -1) // ESC 입력 처리
         {
             return -1; // 로그인 취소
         }
