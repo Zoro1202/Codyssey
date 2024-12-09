@@ -4,7 +4,7 @@
 #include <string.h>
 #include <time.h>
 #include <windows.h>
-
+ 
 // 최대 계좌 수
 #define MAX_USERS 100
 // 최대 히스토리 갯수
