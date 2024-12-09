@@ -198,7 +198,7 @@ void SortUsers()
     {
         for (int j = 0; j < userCount - i - 1; j++)
         {
-            if (users[j].balance < users[j + 1].balance)
+            if (users[j].account.balance < users[j + 1].account.balance)
             {
                 // Swap users[j] and users[j + 1]
                 temp = users[j];
