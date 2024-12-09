@@ -9,6 +9,8 @@
 #define MAX_USERS 100
 // 최대 히스토리 갯수
 #define MAX_HISTORY 20
+//유저당 최대 계좌 수
+#define MAX_ACCOUNT 5
 // 폭
 #define WIDTH 120
 // 높이
@@ -24,14 +26,23 @@ typedef struct Transaction
     long long balanceAfter; // 거래 후 잔액
 } Transaction;
 
+typedef struct Account
+{
+    char accountname[50];
+    char accountNumber[14];
+    char openDate[20];
+    long long balance;
+    Transaction history[MAX_HISTORY]; //queue 방식
+    int historyCount;
+} Account;
+
 typedef struct User
 {
     char name[50];
-    char accountNumber[14];
-    char openDate[20];                // 계좌 개설 날짜
-    long long balance;                // 현재 돈
-    Transaction history[MAX_HISTORY]; // 기록들
-    int historyCount;                 // 기록의 개수
+    char id[50];
+    char password[50];
+    Account account[MAX_ACCOUNT]; // 최대치 도달 하면 더 이상 못 만들게
+    int accountCount;
 } User;
 
 User users[MAX_USERS];
@@ -130,22 +141,22 @@ void FormatNumberWithCommas(char *buffer, long long number)
 // 히스토리 추가하기
 void AddTransaction(User *user, long long amount, const char *description)
 {
-    if (user->historyCount >= MAX_HISTORY)
+    if (user->account->historyCount >= MAX_HISTORY)
     {
         // 가장 오래된 기록 삭제 queue, FIFO
         for (int i = 1; i < MAX_HISTORY; i++)
         {
-            user->history[i - 1] = user->history[i];
+            user->account->history[i - 1] = user->account->history[i];
         }
-        user->historyCount--; // 기록 수 하나 줄임
+        user->account->historyCount--; // 기록 수 하나 줄임
     }
 
     // 새로운 거래 기록 추가
-    GetCurrentDate(user->history[user->historyCount].date);
-    strcpy(user->history[user->historyCount].description, description);
-    user->history[user->historyCount].amount = amount;
-    user->history[user->historyCount].balanceAfter = user->balance;
-    user->historyCount++; // 기록 수 증가
+    GetCurrentDate(user->account->history[user->account->historyCount].date);
+    strcpy(user->account->history[user->account->historyCount].description, description);
+    user->account->history[user->account->historyCount].amount = amount;
+    user->account->history[user->account->historyCount].balanceAfter = user->account->balance;
+    user->account->historyCount++; // 기록 수 증가
 }
 
 // 계좌 개설
@@ -170,10 +181,10 @@ void AddUser()
 
     // 계좌 번호 생성할 때, 랜덤으로 받기 2403 - 24 - (1234567) <- 랜덤으로 받을 7자리
     // rand() % (max_number + 1 - minimum_number) + minimum_number
-    sprintf(users[userCount].accountNumber, "%013lld", rn);
-    GetCurrentDate(users[userCount].openDate);
-    users[userCount].balance = 0;
-    users[userCount].historyCount = 0;
+    sprintf(users[userCount].account.accountNumber, "%013lld", rn);
+    GetCurrentDate(users[userCount].account.openDate);
+    users[userCount].account.balance = 0;
+    users[userCount].account.historyCount = 0;
 
     userCount++;
 }
@@ -539,6 +550,21 @@ void LoadAccountsFromFile(const char *filename)
     }
 
     fclose(file);
+}
+
+void UserLoginToAccount(){
+
+    char id[50];
+
+    PrintCenteredText(2, "===== 로그인 =====");
+    printf("\033[%d;%dH아이디 입력: ", HEIGHT - 2, WIDTH - 30);
+    fgets(id, sizeof(id), stdin);
+
+    //비밀번호 입력
+
+    //Account Permission 조사
+    //Admin, 일반 유저 default 
+
 }
 
 void MainLoop()
