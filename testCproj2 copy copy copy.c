@@ -16,7 +16,7 @@
 // 높이
 #define HEIGHT 25
 
-#define FILENAME "accounts.json"
+#define FILENAME "accounts1.json"
 
 typedef struct Transaction
 {
@@ -81,15 +81,129 @@ void DrawUIBorder()
     printf("\n");
 }
 
+/** 메뉴 선택
+ * @param selectedOption 선택할 메뉴
+ * @param numOptions 최대 옵션 개수
+ * @return selectedOption
+ */
+int HandleMenuInput(int selectedOption, int numOptions)
+{
+    char input = _getch();
+
+    if (input == 'w' || input == 'W' || input == 72) // W 또는 위 화살표
+    {
+        if (selectedOption > 0)
+            selectedOption--;
+    }
+    else if (input == 's' || input == 'S' || input == 80) // S 또는 아래 화살표
+    {
+        if (selectedOption < numOptions - 1)
+            selectedOption++;
+    }
+    else if (input == '\r') // Enter
+    {
+        return -(selectedOption + 1); // Enter를 눌렀을 때 선택된 옵션을 음수로 반환
+    }
+    else if (input == 27) // ESC 키
+    {
+        return -99; // ESC 키 반환 값
+    }
+
+    return selectedOption; // 선택된 옵션 유지
+}
+
+/** 숫자 입력
+ * @param prompt 프롬프트"\033[행;열H"+"할말"
+ * @param maxLength 문자열 최대 길이
+ */
+long long HandleOnlyNumInput(const char *prompt, int maxLength)
+{
+    char input[50] = {0}; // 입력을 저장할 문자열
+    int pos = 0; // 커서위치
+
+    printf("%s", prompt);
+
+    while (1)
+    {
+        char c = _getch(); // 키 입력 감지
+
+        if (c == 27) // ESC 키
+        {
+            return -1; // 취소를 나타내는 값 반환
+        }
+        else if (c == '\r') // Enter 키
+        {
+            input[pos] = '\0'; // 입력 문자열 종료
+            break;
+        }
+        else if (c >= '0' && c <= '9') // 숫자 입력
+        {
+            if (pos < maxLength)
+            {
+                input[pos++] = c;
+                printf("%c", c); // 입력된 숫자 화면에 표시
+            }
+        }
+        else if (c == 8 && pos > 0) // Backspace 처리
+        {
+            pos--;
+            printf("\b \b"); // 화면에서 문자 제거
+        }
+    }
+
+    return atoll(input); // 문자열을 정수로 변환하여 반환
+}
+
+/** 문자열 입력
+ * @param buffer 입력받을 배열
+ * @param bufferSize 사이즈
+ * @return 입력취소 = -1, 엔터키 = 0
+ */
+int HandleStringInput(char *buffer, int bufferSize)
+{
+    int pos = 0;
+
+    while (1)
+    {
+        char c = _getch(); // 키 입력 감지
+
+        if (c == 27) // ESC 키
+        {
+            return -1; // 취소를 나타내는 값 반환
+        }
+        else if (c == '\r') // Enter 키
+        {
+            buffer[pos] = '\0'; // 문자열 종료
+            return 0; // 정상 입력 완료
+        }
+        else if (c >= ' ' && c <= '~') // 일반 문자 입력 (ASCII 범위)
+        {
+            if (pos < bufferSize - 1)
+            {
+                buffer[pos++] = c;
+                printf("%c", c); // 화면에 출력
+            }
+        }
+        else if (c == 8 && pos > 0) // Backspace 처리
+        {
+            pos--;
+            printf("\b \b"); // 화면에서 문자 제거
+        }
+    }
+}
+
 // 현재 시간 저장
-void GetCurrentDate(char *buffer)
+// @param buffer "YYYY-MM-DD HH:MM"
+void GetCurrentDateTIME(char *buffer)
 {
     time_t t = time(NULL);
     struct tm *tm_info = localtime(&t); // 컴퓨터 시간
     strftime(buffer, 20, "%Y-%m-%d %H:%M", tm_info);
 }
-// 현재 시간 저장
-void GetCurrentDate_noTime(char *buffer)
+
+// 현재 시간 저장 - 메뉴 옆에 출력하려고
+// @param buffer "YYYY-MM-DD [WEEK]"
+void GetCurrentDateWEEK(char *buffer)
 {
     time_t t = time(NULL);
     struct tm *tm_info = localtime(&t); // 컴퓨터 시간
@@ -97,14 +211,17 @@ void GetCurrentDate_noTime(char *buffer)
 }
 
 // 타이틀 옆에 시간 출력
+// @param row 행(높이)
 void PrintCurrentDate(int row)
 {
     char buffer[25];
-    GetCurrentDate_noTime(buffer);
+    GetCurrentDateWEEK(buffer);
     printf("\033[%d;%dH%s", row + 1, WIDTH - 26, buffer);
 }
 
-// 타이틀 출력
+// 타이틀 출력(가운데 정렬)
+// @param row 행(높이)
+// @param text "할말"
 void PrintCenteredText(int row, char *text)
 {
     int padding = (WIDTH - strlen(text)) / 2;
@@ -113,84 +230,196 @@ void PrintCenteredText(int row, char *text)
 }
 
 // 천의 자리 숫자마다 콤마 찍기
-void FormatNumberWithCommas(char *buffer, long long number)
+void AddCommas(char *buffer, size_t bufferSize, long long number)
 {
     char temp[50];
-    sprintf(temp, "%lld", number);
+    snprintf(temp, sizeof(temp), "%lld", number);
 
     int len = strlen(temp);
     int commaCount = (len - 1) / 3;
     int newLen = len + commaCount;
 
-    buffer[newLen] = '\0';
-    int tempIndex = len - 1;
-    int bufferIndex = newLen - 1;
-    int count = 0;
-
-    while (tempIndex >= 0)
+    if (newLen >= bufferSize)
     {
-        buffer[bufferIndex--] = temp[tempIndex--];
-        if (++count == 3 && tempIndex >= 0)
+        buffer[0] = '\0'; // 버퍼가 부족하면 빈 문자열 반환
+        return;
+    }
+
+    int srcIndex = len - 1;
+    int destIndex = newLen - 1;
+
+    buffer[newLen] = '\0'; // 종료 문자
+
+    int groupCounter = 0;
+    while (srcIndex >= 0)
+    {
+        buffer[destIndex--] = temp[srcIndex--];
+        groupCounter++;
+        if (groupCounter == 3 && srcIndex >= 0)
         {
-            buffer[bufferIndex--] = ',';
-            count = 0;
+            buffer[destIndex--] = ',';
+            groupCounter = 0;
         }
     }
 }
 
-// 히스토리 추가하기
-void AddTransaction(User *user, long long amount, const char *description)
+/** 히스토리 추가하기
+ * @param account 유저->계좌
+ * @param amount 얼마?
+ * @param description "설명"
+ */
+void AddAcountHistory(Account *account, long long amount, const char *description)
 {
-    if (user->account->historyCount >= MAX_HISTORY)
+    // 거래 기록이 최대치를 초과하면 가장 오래된 기록 제거
+    if (account->historyCount >= MAX_HISTORY)
     {
-        // 가장 오래된 기록 삭제 queue, FIFO
         for (int i = 1; i < MAX_HISTORY; i++)
         {
-            user->account->history[i - 1] = user->account->history[i];
+            account->history[i - 1] = account->history[i];
         }
-        user->account->historyCount--; // 기록 수 하나 줄임
+        account->historyCount--; // 기록 수 감소
     }
 
     // 새로운 거래 기록 추가
-    GetCurrentDate(user->account->history[user->account->historyCount].date);
-    strcpy(user->account->history[user->account->historyCount].description, description);
-    user->account->history[user->account->historyCount].amount = amount;
-    user->account->history[user->account->historyCount].balanceAfter = user->account->balance;
-    user->account->historyCount++; // 기록 수 증가
+    Transaction *newTransaction = &account->history[account->historyCount];
+    GetCurrentDateTIME(newTransaction->date);
+    strncpy(newTransaction->description, description, sizeof(newTransaction->description) - 1);
+    newTransaction->description[sizeof(newTransaction->description) - 1] = '\0'; // 안전하게 NULL 종료
+    newTransaction->amount = amount;
+    newTransaction->balanceAfter = account->balance; // 현재 잔액 기준으로 잔액 저장
+    account->historyCount++; // 기록 수 증가
 }
 
 // 계좌 개설
-void AddUser()
+// @param user 유저
+void AddAccount(User *user)
 {
-    if (userCount >= MAX_USERS)
+    if (user->accountCount >= MAX_ACCOUNT)
+    {
+        printf("더 이상 계좌를 추가할 수 없습니다.\n");
+        Sleep(2000);
         return;
+    }
 
-    char name[50];
     ClearScreen();
     DrawUIBorder();
-    PrintCenteredText(2, "===== 사용자 추가 =====");
-    printf("\033[%d;%dH고객 이름 입력: ", HEIGHT - 2, WIDTH - 30);
-    fgets(name, sizeof(name), stdin);
-    name[strcspn(name, "\n")] = 0;
+    PrintCenteredText(2, "===== 계좌 추가 =====");
+    printf("\033[%d;5H(ESC로 뒤로가기)", HEIGHT - 2);
 
-    strcpy(users[userCount].name, name);
+    // 사용자 비밀번호 확인
+    char inputPassword[50];
+    printf("\033[4;5H사용자 계정 비밀번호를 입력하세요: ");
+    fgets(inputPassword, sizeof(inputPassword), stdin);
+    inputPassword[strcspn(inputPassword, "\n")] = 0; // 개행 문자 제거
 
-    srand(userCount);
-    long long rn = rand() % (9999999 + 1 - 1000000) + 1000000; // 7자리 랜덤한 수
-    rn += 2403240000000;                                       // 고유번호 4자리와 년도 2자리까지는 상수로 넣기.  // 수정 하던지 하고 지금은 그냥 상수로 받자
+    if (strcmp(inputPassword, user->password) != 0)
+    {
+        printf("\033[6;5H비밀번호가 일치하지 않습니다. 계좌 추가를 취소합니다.\n");
+        Sleep(2000);
+        return;
+    }
 
-    // 계좌 번호 생성할 때, 랜덤으로 받기 2403 - 24 - (1234567) <- 랜덤으로 받을 7자리
-    // rand() % (max_number + 1 - minimum_number) + minimum_number
-    sprintf(users[userCount].account.accountNumber, "%013lld", rn);
-    GetCurrentDate(users[userCount].account.openDate);
-    users[userCount].account.balance = 0;
-    users[userCount].account.historyCount = 0;
+    // 은행 선택
+    const char *bankOptions[] = {
+        "하나은행 (0810)",
+        "농협은행 (3510)"
+    };
+    //은행 개수
+    const int numOptions = 2;
+    // 선택 메뉴
+    int selectedOption = 0;
 
-    userCount++;
+    while (1)
+    {
+        ClearScreen();
+        DrawUIBorder();
+        PrintCenteredText(2, "===== 계좌 추가 =====");
+
+        for (int i = 0; i < numOptions; i++)
+        {
+            if (i == selectedOption)
+                printf("\033[%d;5H> %s", 4 + i, bankOptions[i]);
+            else
+                printf("\033[%d;5H  %s", 4 + i, bankOptions[i]);
+        }
+
+        // TODO - 이거 HandleMenuInput 으로 바꾸기
+        char input = _getch();
+        if (input == 27) // ESC 키
+        {
+            return; // 뒤로가기
+        }
+        if (input == 'w' || input == 'W' || input == 72) // W 또는 위 화살표
+        {
+            if (selectedOption > 0)
+                selectedOption--;
+        }
+        else if (input == 's' || input == 'S' || input == 80) // S 또는 아래 화살표
+        {
+            if (selectedOption < numOptions - 1)
+                selectedOption++;
+        }
+        else if (input == '\r') // Enter
+        {
+            break; // 은행 선택 완료
+        }
+    }
+
+    // 계좌 생성
+    Account *newAccount = &user->account[user->accountCount++];
+    //은행 코드
+    char bankCode[5];
+
+    // 은행별 번호 정하기
+    if (selectedOption == 0) // 하나은행
+        strcpy(bankCode, "0810");
+    else if (selectedOption == 1) // 농협은행
+        strcpy(bankCode, "3510");
+
+    //현재 시간 받아오기 null  값을 넣으면 현재 시간임.
+    
+    //1970년 1월 1일 UTC부터 경과된 초
+    time_t now = time(NULL);
+    //그걸 연도, 월, 일, 시, 분 등 구조체 정보로 바꿈.
+    struct tm *t = localtime(&now);
+    // 연도의 마지막 두 자리만 쓰기 (예: 2024 -> 24)
+    int year = t->tm_year % 100; 
+
+    // 랜덤 시드
+    // 겹치는 경우가 많아서 좀 시드의 복잡성을 더함.
+    // 랜덤 시드 = 계좌 수(1~) + (은행 코드(0810 => 810) * 날짜(일, 1 ~ 31)) + 유저 이름에 첫번째 ascii 값(32~127?)
+    int randomSeedForAccountnum = (userCount*user->accountCount)+(atoi(bankCode)*t->tm_mday)+(int)user->name[0];
+    srand(randomSeedForAccountnum);
+
+    // 랜덤 6자리 번호 생성
+    long long randomPart = rand() % (999999 - 100000 + 1) + 100000;
+
+    // 계좌 번호 생성
+    sprintf(newAccount->accountNumber, "%s%02d%06lld", bankCode, year, randomPart);
+
+    //현재날짜 구하기
+    GetCurrentDateTIME(newAccount->openDate);
+    newAccount->balance = 0;
+    newAccount->historyCount = 0;
+
+    printf("\033[%d;5H계좌 추가 완료! 계좌번호: %s", HEIGHT - 3, newAccount->accountNumber);
+    Sleep(2000);
+}
+
+// 사용자의 총 재산
+// @param user 유저
+long long GetUserTotalBalance(User *user)
+{
+    long long totalBalance = 0;
+    for (int i = 0; i < user->accountCount; i++)
+    {
+        totalBalance += user->account[i].balance;
+    }
+    return totalBalance;
 }
 
 // 유저 정렬 // 돈 많은 순서, 버블 정렬 O(n^2)
-// TODO - 이진 탐색 구조로 계좌가 갱신된 유저를 선택적으로 정렬하도록 바꾸기
+// TODO - 이진 탐색 구조?로 계좌가 갱신된 유저를 선택적으로 정렬하도록 바꾸기
 void SortUsers()
 {
     User temp;
@@ -198,7 +427,11 @@ void SortUsers()
     {
         for (int j = 0; j < userCount - i - 1; j++)
         {
-            if (users[j].account.balance < users[j + 1].account.balance)
+            // 총 계좌 잔액을 기준으로 비교
+            long long balance1 = GetUserTotalBalance(&users[j]);
+            long long balance2 = GetUserTotalBalance(&users[j + 1]);
+
+            if (balance1 < balance2)
             {
                 // Swap users[j] and users[j + 1]
                 temp = users[j];
@@ -209,274 +442,615 @@ void SortUsers()
     }
 }
 
-// 유저 -> 유저 돈 보내기
-void TransferMoney(User *from, User *to)
+// 회원가입
+void RegisterUser()
 {
-    long long amount;
+    if (userCount >= MAX_USERS)
+    {
+        printf("더 이상 사용자를 추가할 수 없습니다.\n");
+        Sleep(2000);
+        return;
+    }
+
     ClearScreen();
     DrawUIBorder();
-    PrintCenteredText(2, "===== 계좌 이체 =====");
-    printf("\033[%d;%dH받는 사용자: %s (%s)", 4, 5, to->name, to->accountNumber);
-    printf("\033[%d;%dH보낼 금액 입력: ", HEIGHT - 2, WIDTH - 30);
-    scanf("%lld", &amount);
+    PrintCenteredText(2, "===== 회원가입 =====");
+
+    // 1. 사용자 정보 입력
+    printf("\033[%d;%dH고객 이름 입력: ", 4, 5);
+    fgets(users[userCount].name, sizeof(users[userCount].name), stdin);
+    users[userCount].name[strcspn(users[userCount].name, "\n")] = 0;
+
+    printf("\033[%d;%dH아이디 입력: ", 5, 5);
+    fgets(users[userCount].id, sizeof(users[userCount].id), stdin);
+    users[userCount].id[strcspn(users[userCount].id, "\n")] = 0;
+
+    printf("\033[%d;%dH비밀번호 입력: ", 6, 5);
+    fgets(users[userCount].password, sizeof(users[userCount].password), stdin);
+    users[userCount].password[strcspn(users[userCount].password, "\n")] = 0;
+
+    // 초기 계좌 개수 설정
+    users[userCount].accountCount = 0;
+
+    printf("\033[%d;%dH회원가입 완료! 환영합니다, %s님.", 8, 5, users[userCount].name);
+    Sleep(2000);
+
+    // 2. 계좌 개설 여부 확인
+    char choice;
+    printf("\033[%d;%dH계좌를 개설하시겠습니까? (Y/N): ", 9, 5);
+    scanf(" %c", &choice);
     getchar();
 
-    if (amount <= 0)
+    if (choice == 'Y' || choice == 'y')
     {
-        printf("\033[%d;%dH유효한 금액을 입력하세요.", HEIGHT - 3, WIDTH - 30);
-        Sleep(2000);
-        return;
+        AddAccount(&users[userCount]); // 계좌 추가
     }
 
-    if (from->balance < amount)
-    {
-        printf("\033[%d;%dH잔액이 부족합니다.", HEIGHT - 3, WIDTH - 30);
-        Sleep(2000);
-        return;
-    }
-
-    // 잔액 처리
-    from->balance -= amount;
-    to->balance += amount;
-
-    // 기록 추가
-    char fromDescription[100], toDescription[100];
-    sprintf(fromDescription, "송금: %s (%s)", to->name, to->accountNumber);
-    sprintf(toDescription, "입금: %s (%s)", from->name, from->accountNumber);
-
-    AddTransaction(from, -amount, fromDescription); // 송금 기록
-    AddTransaction(to, amount, toDescription);      // 입금 기록
-
-    // 완료 메시지
-    for (int i = 3; i > 0; i--)
-    {
-        printf("\033[%d;%dH이체 완료! %d초 후 돌아갑니다...", HEIGHT - 3, WIDTH - 50, i);
-        Sleep(1000);
-    }
-
-    SortUsers();
+    userCount++;
 }
 
-// 메인 메뉴 출력
-void PrintMainMenu()
+// 히스토리 출력
+void ViewAccountHistory(Account *account)
 {
-    ClearScreen();
-    DrawUIBorder();
-
-    PrintCenteredText(2, "===== 메인 메뉴 =====");
-
-    int row = 4; // 시작 행
-    for (int i = 0; i < userCount; i++)
+    while (1)
     {
-        char formattedBalance[50];
-        FormatNumberWithCommas(formattedBalance, users[i].balance);
+        ClearScreen();
+        DrawUIBorder();
+        PrintCenteredText(2, "===== 거래 내역 =====");
 
-        if (i == selectedUser)
+        if (account->historyCount == 0)
         {
-            printf("\033[%d;%dH> %s (₩%s)", row, 5, users[i].name, formattedBalance);
+            printf("\033[4;5H거래 내역이 없습니다.\n");
+            printf("\033[%d;5H(ESC로 뒤로가기)", HEIGHT - 2);
         }
         else
         {
-            printf("\033[%d;%dH  %s (₩%s)", row, 5, users[i].name, formattedBalance);
+            // 히스토리 출력
+            for (int i = 0; i < account->historyCount; i++)
+            {
+                Transaction *transaction = &account->history[i];
+                printf("\033[%d;5H[%s] %s | 금액: %lld | 잔액: %lld",
+                       4 + i, transaction->date, transaction->description, transaction->amount, transaction->balanceAfter);
+            }
+            printf("\033[%d;5H(ESC로 뒤로가기)", HEIGHT - 2);
         }
-        row++;
+
+        char input = _getch();
+        if (input == 27) // ESC 키
+        {
+            return; // 뒤로가기
+        }
+    }
+}
+
+// 계좌 출력 - 히스토리 창 접근
+// @param user 유저
+void ViewAccounts(User *user)
+{
+    if (user->accountCount == 0)
+    {
+        printf("조회할 계좌가 없습니다.\n");
+        Sleep(2000);
+        return;
     }
 
-    if (userCount == selectedUser)
+    int selectedAccountIndex = 0;
+
+    while (1)
     {
-        printf("\033[%d;%dH> [사용자 추가]", row, 5);
+        ClearScreen();
+        DrawUIBorder();
+        PrintCenteredText(2, "===== 계좌 조회 =====");
+
+        // 계좌 목록 출력
+        for (int i = 0; i < user->accountCount; i++)
+        {
+            if (i == selectedAccountIndex)
+                printf("\033[%d;5H> 계좌번호: %s | 잔액: ₩%lld", 4 + i, user->account[i].accountNumber, user->account[i].balance);
+            else
+                printf("\033[%d;5H  계좌번호: %s | 잔액: ₩%lld", 4 + i, user->account[i].accountNumber, user->account[i].balance);
+        }
+
+        printf("\033[%d;5H(ESC로 뒤로가기)", HEIGHT - 2);
+
+        // 키 입력 처리
+        int inputResult = HandleMenuInput(selectedAccountIndex, user->accountCount);
+
+        if (inputResult == -99) // ESC 키
+        {
+            return; // 뒤로가기
+        }
+        else if (inputResult < 0) // Enter
+        {
+            selectedAccountIndex = -(inputResult + 1);
+            ViewAccountHistory(&user->account[selectedAccountIndex]); // 히스토리 보기
+        }
+        else
+        {
+            selectedAccountIndex = inputResult; // 선택된 옵션 업데이트
+        }
     }
-    else
+}
+
+/** 입출금 화면
+ * @param user 유저
+ * @param isDeposit 0 = 입금, 1 = 출금
+ */
+void ProcessTransaction(User *user, int isDeposit)
+{
+    if (user->accountCount == 0)
     {
-        printf("\033[%d;%dH  [사용자 추가]", row, 5);
+        printf("사용 가능한 계좌가 없습니다.\n");
+        Sleep(2000);
+        return;
     }
 
-    // 저장 및 종료 버튼 추가
-    if (selectedUser == userCount + 1)
+    int selectedAccountIndex = 0;
+
+    while (1)
     {
-        printf("\033[%d;%dH> [저장 및 종료]", row + 2, 5);
-    }
-    else
-    {
-        printf("\033[%d;%dH  [저장 및 종료]", row + 2, 5);
+        ClearScreen();
+        DrawUIBorder();
+        PrintCenteredText(2, isDeposit ? "===== 입금 =====" : "===== 출금 =====");
+
+        for (int i = 0; i < user->accountCount; i++)
+        {
+            if (i == selectedAccountIndex)
+                printf("\033[%d;5H> 계좌번호: %s | 잔액: ₩%lld", 4 + i, user->account[i].accountNumber, user->account[i].balance);
+            else
+                printf("\033[%d;5H  계좌번호: %s | 잔액: ₩%lld", 4 + i, user->account[i].accountNumber, user->account[i].balance);
+        }
+
+        printf("\033[%d;5H(ESC로 취소)", HEIGHT - 2);
+
+        int inputResult = HandleMenuInput(selectedAccountIndex, user->accountCount);
+
+        if (inputResult == -99) // ESC 키
+        {
+            return; // 취소
+        }
+        else if (inputResult < 0) // Enter 키
+        {
+            selectedAccountIndex = -(inputResult + 1);
+            break; // 계좌 선택 완료
+        }
+        else
+        {
+            selectedAccountIndex = inputResult; // 선택된 옵션 업데이트
+        }
     }
 
-    // 툴팁
-    printf("\033[%d;%dHW: 위로 이동, S: 아래로 이동, Enter: 선택", HEIGHT - 1, 2);
+    Account *selectedAccount = &user->account[selectedAccountIndex];
+
+    while (1)
+    {
+        ClearScreen();
+        DrawUIBorder();
+        PrintCenteredText(2, isDeposit ? "===== 입금: 금액 입력 =====" : "===== 출금: 금액 입력 =====");
+
+        long long amount = HandleOnlyNumInput("\033[4;5H금액 입력 (ESC로 취소): ", 10);
+
+        if (amount == -1) // ESC 키로 취소
+        {
+            return;
+        }
+
+        if (amount <= 0)
+        {
+            printf("\033[%d;5H잘못된 금액입니다. 다시 입력하세요.", HEIGHT - 3);
+            Sleep(2000);
+            continue;
+        }
+
+        if (!isDeposit && selectedAccount->balance < amount)
+        {
+            printf("\033[%d;5H잔액이 부족합니다. 다시 입력하세요.", HEIGHT - 3);
+            Sleep(2000);
+            continue;
+        }
+
+        // 금액 처리
+        if (isDeposit)
+        {
+            selectedAccount->balance += amount;
+            AddAcountHistory(selectedAccount, amount, "입금");
+        }
+        else
+        {
+            selectedAccount->balance -= amount;
+            AddAcountHistory(selectedAccount, -amount, "출금");
+        }
+
+        printf("\033[%d;5H%s 완료!", HEIGHT - 3, isDeposit ? "입금" : "출금");
+        Sleep(2000);
+        return;
+    }
+}
+
+// 송금 유저 선택
+// @param fromUser 송금할 유저
+void HandleTransfer(User *fromUser)
+{
+    if (fromUser->accountCount == 0)
+    {
+        printf("송금할 계좌가 없습니다. 계좌를 추가해 주세요.\n");
+        Sleep(2000);
+        return;
+    }
+
+    // 1. 송금 계좌 선택
+    int fromAccountIndex = 0;
+
+    while (1)
+    {
+        ClearScreen();
+        DrawUIBorder();
+        PrintCenteredText(2, "===== 송금: 송금 계좌 선택 =====");
+
+        for (int i = 0; i < fromUser->accountCount; i++)
+        {
+            if (i == fromAccountIndex)
+                printf("\033[%d;5H> 계좌번호: %s | 잔액: ₩%lld", 4 + i, fromUser->account[i].accountNumber, fromUser->account[i].balance);
+            else
+                printf("\033[%d;5H  계좌번호: %s | 잔액: ₩%lld", 4 + i, fromUser->account[i].accountNumber, fromUser->account[i].balance);
+        }
+
+        printf("\033[%d;5H(ESC로 취소)", HEIGHT - 2);
+
+        int inputResult = HandleMenuInput(fromAccountIndex, fromUser->accountCount);
+
+        if (inputResult == -99) // ESC 키
+        {
+            return; // 취소
+        }
+        else if (inputResult < 0) // Enter 키
+        {
+            fromAccountIndex = -(inputResult + 1);
+            break; // 송금 계좌 선택 완료
+        }
+        else
+        {
+            fromAccountIndex = inputResult; // 선택된 옵션 업데이트
+        }
+    }
+
+    Account *fromAccount = &fromUser->account[fromAccountIndex];
+
+    // 2. 수취 사용자 선택
+    int targetUserIndex = 0;
+
+    while (1)
+    {
+        ClearScreen();
+        DrawUIBorder();
+        PrintCenteredText(2, "===== 송금: 수취 사용자 선택 =====");
+
+        for (int i = 0; i < userCount; i++)
+        {
+            if (&users[i] != fromUser) // 자신 제외
+            {
+                if (i == targetUserIndex)
+                    printf("\033[%d;5H> %s", 4 + i, users[i].name);
+                else
+                    printf("\033[%d;5H  %s", 4 + i, users[i].name);
+            }
+        }
+
+        printf("\033[%d;5H(ESC로 취소)", HEIGHT - 2);
+
+        int inputResult = HandleMenuInput(targetUserIndex, userCount);
+
+        if (inputResult == -99) // ESC 키
+        {
+            return; // 취소
+        }
+        else if (inputResult < 0) // Enter 키
+        {
+            targetUserIndex = -(inputResult + 1);
+            break; // 수취 사용자 선택 완료
+        }
+        else
+        {
+            targetUserIndex = inputResult; // 선택된 옵션 업데이트
+        }
+    }
+
+    User *toUser = &users[targetUserIndex];
+
+    // 3. 수취 계좌 선택
+    if (toUser->accountCount == 0)
+    {
+        printf("선택한 사용자에게 계좌가 없습니다.\n");
+        Sleep(2000);
+        return;
+    }
+
+    int toAccountIndex = 0;
+
+    while (1)
+    {
+        ClearScreen();
+        DrawUIBorder();
+        PrintCenteredText(2, "===== 송금: 수취 계좌 선택 =====");
+
+        for (int i = 0; i < toUser->accountCount; i++)
+        {
+            if (i == toAccountIndex)
+                printf("\033[%d;5H> 계좌번호: %s | 잔액: ₩%lld", 4 + i, toUser->account[i].accountNumber, toUser->account[i].balance);
+            else
+                printf("\033[%d;5H  계좌번호: %s | 잔액: ₩%lld", 4 + i, toUser->account[i].accountNumber, toUser->account[i].balance);
+        }
+
+        printf("\033[%d;5H(ESC로 취소)", HEIGHT - 2);
+
+        int inputResult = HandleMenuInput(toAccountIndex, toUser->accountCount);
+
+        if (inputResult == -99) // ESC 키
+        {
+            return; // 취소
+        }
+        else if (inputResult < 0) // Enter 키
+        {
+            toAccountIndex = -(inputResult + 1);
+            break; // 수취 계좌 선택 완료
+        }
+        else
+        {
+            toAccountIndex = inputResult; // 선택된 옵션 업데이트
+        }
+    }
+
+    Account *toAccount = &toUser->account[toAccountIndex];
+
+    // 4. 송금 금액 입력
+    while (1)
+    {
+        ClearScreen();
+        DrawUIBorder();
+        PrintCenteredText(2, "===== 송금: 금액 입력 =====");
+
+        long long amount = HandleOnlyNumInput("\033[4;5H송금할 금액 입력 (ESC로 취소): ", 10);
+        
+        if (amount == -1) // ESC 키
+        {
+            return; // 취소
+        }
+        
+        if (amount <= 0)
+        {
+            printf("\033[%d;5H잘못된 금액입니다. 다시 입력하세요.", HEIGHT - 3);
+            Sleep(2000);
+            continue;
+        }
+
+        if (fromAccount->balance < amount)
+        {
+            printf("\033[%d;5H잔액이 부족합니다. 다시 입력하세요.", HEIGHT - 3);
+            Sleep(2000);
+            continue;
+        }
+
+        // 5. 송금 처리
+        fromAccount->balance -= amount;
+        toAccount->balance += amount;
+
+        // 거래 기록 추가
+        char fromDescription[100], toDescription[100];
+        sprintf(fromDescription, "송금: %s (%s)", toUser->name, toAccount->accountNumber);
+        sprintf(toDescription, "입금: %s (%s)", fromUser->name, fromAccount->accountNumber);
+
+        AddAcountHistory(fromAccount, -amount, fromDescription);
+        AddAcountHistory(toAccount, amount, toDescription);
+
+        printf("\033[%d;5H송금 완료!", HEIGHT - 3);
+        Sleep(2000);
+        return;
+    }
+}
+
+// 로그인 화면
+// @return 로그인 취소 = -1, 로그인 성공 = 사용자 인덱스
+int UserLoginToAccount()
+{
+    char id[50];
+    char password[50];
+
+    while (1)
+    {
+        ClearScreen();
+        DrawUIBorder();
+        PrintCenteredText(2, "===== 로그인 =====");
+
+        printf("\033[4;5H아이디 입력 (ESC로 취소): ");
+        if (HandleStringInput(id, sizeof(id)) == -1) // ESC 입력 처리
+        {
+            return -1; // 로그인 취소
+        }
+
+        printf("\033[5;5H비밀번호 입력 (ESC로 취소): ");
+        if (HandleStringInput(password, sizeof(password)) == -1) // ESC 입력 처리
+        {
+            return -1; // 로그인 취소
+        }
+
+        // 로그인 검증
+        for (int i = 0; i < userCount; i++)
+        {
+            if (strcmp(users[i].id, id) == 0 && strcmp(users[i].password, password) == 0)
+            {
+                printf("\033[7;5H로그인 성공! 환영합니다, %s님.", users[i].name);
+                Sleep(2000);
+                return i; // 로그인 성공
+            }
+        }
+
+        // 로그인 실패
+        printf("\033[7;5H아이디 또는 비밀번호가 잘못되었습니다. 다시 시도하세요.");
+        Sleep(2000);
+    }
+
+    return -1; // 로그인 실패
 }
 
 // 유저 메뉴 출력
-void PrintUserMenu()
+// @param user 유저
+void UserMenu(User *user)
 {
-    ClearScreen();
-    DrawUIBorder();
+    int selectedOption = 0; // 현재 선택된 옵션
+    const int numOptions = 6; // 메뉴 옵션 개수
 
-    User *user = &users[selectedUser];
-    PrintCenteredText(2, user->name);
-
-    char formattedBalance[50];
-    FormatNumberWithCommas(formattedBalance, user->balance);
-
-    printf("\033[4;7H계좌번호: %s", user->accountNumber);
-    printf("\033[5;7H개설일: %s", user->openDate);
-    printf("\033[6;7H현재 잔액: ₩%s", formattedBalance);
-    printf("\033[%d;%dH입금: Q, 출금: E, 이체: D, 뒤로가기: A + Enter", HEIGHT - 1, 2);
-
-    int visibleLines = HEIGHT - 12; // 화면에 표시 가능한 히스토리 줄 수
-    int startRow = 8;
-
-    // 히스토리 출력
-    for (int i = 0; i < visibleLines; i++)
+    while (1)
     {
-        int index = historyOffset + i; // 현재 출력할 히스토리의 인덱스
-        if (index >= user->historyCount)
-            break; // 히스토리 끝까지 출력 완료
+        ClearScreen();
+        DrawUIBorder();
+        PrintCenteredText(2, "===== 사용자 메뉴 =====");
 
-        char formattedTransaction[50];
-        FormatNumberWithCommas(formattedTransaction, abs(user->history[index].amount)); // 절대값 사용
+        // 메뉴 옵션
+        const char *menuOptions[] = {
+            "계좌 조회",
+            "입금",
+            "출금",
+            "송금",
+            "계좌 추가",
+            "로그아웃"
+        };
 
-        if (index == historyCursor)
+        // 메뉴 출력
+        for (int i = 0; i < numOptions; i++)
         {
-            // 현재 커서 위치 강조
-            printf("\033[%d;5H> [%d] %s | %s | 금액: ₩%s | 잔액: ₩%lld", startRow + i,
-                   index + 1, // 인덱스는 1부터 시작
-                   user->history[index].date,
-                   user->history[index].description,
-                   formattedTransaction,
-                   user->history[index].balanceAfter);
+            if (i == selectedOption)
+                printf("\033[%d;5H> %s", 4 + i, menuOptions[i]);
+            else
+                printf("\033[%d;5H  %s", 4 + i, menuOptions[i]);
         }
-        else
+
+        // 키 입력 처리
+        char input = _getch();
+        if (input == 'w' || input == 'W' || input == 72) // W 또는 위 화살표
         {
-            printf("\033[%d;5H  [%d] %s | %s | 금액: ₩%s | 잔액: ₩%lld", startRow + i,
-                   index + 1, // 인덱스는 1부터 시작
-                   user->history[index].date,
-                   user->history[index].description,
-                   formattedTransaction,
-                   user->history[index].balanceAfter);
+            if (selectedOption > 0)
+                selectedOption--;
+        }
+        else if (input == 's' || input == 'S' || input == 80) // S 또는 아래 화살표
+        {
+            if (selectedOption < numOptions - 1)
+                selectedOption++;
+        }
+        else if (input == '\r') // Enter
+        {
+            switch (selectedOption)
+            {
+            case 0: // 계좌 조회
+                ViewAccounts(user);
+                break;
+            case 1: // 입금
+                ProcessTransaction(user, 1); // 1 = 입금
+                break;
+            case 2: // 출금
+                ProcessTransaction(user, 0); // 0 = 출금
+                break;
+            case 3: // 송금
+                HandleTransfer(user);
+                break;
+            case 4: // 계좌 추가
+                AddAccount(user);
+                break;
+            case 5: // 로그아웃
+                return; // 로그아웃 시 메뉴 종료
+            }
         }
     }
 }
 
-// 송금 유저 선택 화면
-void HandleTransfer(User *from)
+// 메인 메뉴 출력
+// @return 메뉴 옵션
+int PrintMainMenu()
 {
-    int targetIndex;
     ClearScreen();
     DrawUIBorder();
-    PrintCenteredText(2, "===== 송금 =====");
-    for (int i = 0; i < userCount; i++)
+    PrintCenteredText(2, "===== 메인 메뉴 =====");
+
+    const char *menuOptions[] = {
+        "로그인",
+        "회원가입",
+        "종료"
+    };
+    const int numOptions = 3;
+    int selectedOption = 0;
+
+    while (1)
     {
-        if (&users[i] != from)
+        // 메뉴 출력
+        for (int i = 0; i < numOptions; i++)
         {
-            printf("\033[%d;5H%d. %s (%s)", 4 + i, i + 1, users[i].name, users[i].accountNumber);
+            if (i == selectedOption)
+                printf("\033[%d;5H> %s", 4 + i, menuOptions[i]);
+            else
+                printf("\033[%d;5H  %s", 4 + i, menuOptions[i]);
         }
-    }
-    printf("\033[%d;%dH송금할 사용자 번호 선택: ", HEIGHT - 2, WIDTH - 30);
-    scanf("%d", &targetIndex);
-    getchar();
 
-    if (targetIndex < 1 || targetIndex > userCount || &users[targetIndex - 1] == from)
-    {
-        printf("\033[%d;%dH잘못된 선택입니다.", HEIGHT - 3, WIDTH - 30);
-        return;
-    }
-
-    TransferMoney(from, &users[targetIndex - 1]);
-}
-
-// 입출금 화면
-void HandleTransaction(User *user, int isDeposit)
-{
-    char input[50];
-    long long amount;
-    ClearScreen();
-    DrawUIBorder();
-    PrintCenteredText(2, isDeposit ? "===== 입금 =====" : "===== 출금 =====");
-
-    printf("\033[%d;%dH현재 잔액: ₩", 4, 5);
-    char formattedBalance[50];
-    FormatNumberWithCommas(formattedBalance, user->balance);
-    printf("%s", formattedBalance);
-
-    printf("\033[%d;%dH금액 입력: ", HEIGHT - 2, WIDTH - 30);
-    fgets(input, sizeof(input), stdin); // 입력을 문자열로 받음
-    input[strcspn(input, "\n")] = '\0'; // 개행 문자 제거
-    // 1234a -> 1234a \0
-    int isNum = 0;
-    // 받은 문자열의 끝까지 검사. , 숫자 이외의 문자가 나오면 isNum = 0으로 바꿈.
-    for (int i = 0; input[i] != '\0'; i++)
-    {
-        // 48 <= input[i] <= 57
-        if ((input[i] >= '0' && input[i] <= '9'))
-            isNum = 1;
-        else if (!(input[i] >= '0' && input[i] <= '9'))
+        // 키 입력 처리
+        char input = _getch();
+        if (input == 'w' || input == 'W' || input == 72) // W 또는 위 화살표
         {
-            isNum = 0;
-            break;
+            if (selectedOption > 0)
+                selectedOption--;
         }
-    }
-
-    if ((isNum == 0) || (sscanf(input, "%lld", &amount) != 1 || amount <= 0))
-    {
-        printf("\033[%d;%dH유효한 금액을 입력하세요.", HEIGHT - 3, WIDTH - 30);
-        Sleep(2000);
-        return;
-    }
-
-    if (isDeposit)
-    {
-        user->balance += amount;
-        char description[100];
-        sprintf(description, "입금");
-        AddTransaction(user, amount, description);
-    }
-    else
-    {
-        if (user->balance < amount)
+        else if (input == 's' || input == 'S' || input == 80) // S 또는 아래 화살표
         {
-            printf("\033[%d;%dH잔액이 부족합니다.", HEIGHT - 3, WIDTH - 30);
-            Sleep(2000);
-            return;
+            if (selectedOption < numOptions - 1)
+                selectedOption++;
         }
-        user->balance -= amount;
-        char description[100];
-        sprintf(description, "출금");
-        AddTransaction(user, -amount, description);
-    }
-
-    // 거래 완료 메시지와 카운트다운
-    for (int i = 3; i > 0; i--)
-    {
-        printf("\033[%d;%dH거래 완료! %d초 후 돌아갑니다...", HEIGHT - 3, WIDTH - 50, i);
-        Sleep(1000);
+        else if (input == '\r') // Enter
+        {
+            return selectedOption; // 선택된 옵션 반환
+        }
     }
 }
 
 // JSON파일 저장 / 로드
+// @param filename 파일 이름
 void SaveAccountsToFile(const char *filename)
 {
     FILE *file = fopen(filename, "w");
     if (!file)
+    {
+        printf("파일을 열 수 없습니다: %s\n", filename);
         return;
+    }
 
     fprintf(file, "[\n");
     for (int i = 0; i < userCount; i++)
     {
+        User *user = &users[i];
         fprintf(file, "  {\n");
-        fprintf(file, "    \"name\": \"%s\",\n", users[i].name);
-        fprintf(file, "    \"accountNumber\": \"%s\",\n", users[i].accountNumber);
-        fprintf(file, "    \"openDate\": \"%s\",\n", users[i].openDate);
-        fprintf(file, "    \"balance\": %lld,\n", users[i].balance);
-        fprintf(file, "    \"history\": [\n");
+        fprintf(file, "    \"name\": \"%s\",\n", user->name);
+        fprintf(file, "    \"id\": \"%s\",\n", user->id);
+        fprintf(file, "    \"password\": \"%s\",\n", user->password);
+        fprintf(file, "    \"accounts\": [\n");
 
-        for (int j = 0; j < users[i].historyCount; j++)
+        for (int j = 0; j < user->accountCount; j++)
         {
+            Account *account = &user->account[j];
             fprintf(file, "      {\n");
-            fprintf(file, "        \"date\": \"%s\",\n", users[i].history[j].date);
-            fprintf(file, "        \"description\": \"%s\",\n", users[i].history[j].description);
-            fprintf(file, "        \"amount\": %lld,\n", users[i].history[j].amount);
-            fprintf(file, "        \"balanceAfter\": %lld\n", users[i].history[j].balanceAfter);
-            fprintf(file, "      }%s\n", (j < users[i].historyCount - 1) ? "," : "");
+            fprintf(file, "        \"accountNumber\": \"%s\",\n", account->accountNumber);
+            fprintf(file, "        \"openDate\": \"%s\",\n", account->openDate);
+            fprintf(file, "        \"balance\": %lld,\n", account->balance);
+            fprintf(file, "        \"history\": [\n");
+
+            for (int k = 0; k < account->historyCount; k++)
+            {
+                Transaction *transaction = &account->history[k];
+                fprintf(file, "          {\n");
+                fprintf(file, "            \"date\": \"%s\",\n", transaction->date);
+                fprintf(file, "            \"description\": \"%s\",\n", transaction->description);
+                fprintf(file, "            \"amount\": %lld,\n", transaction->amount);
+                fprintf(file, "            \"balanceAfter\": %lld\n", transaction->balanceAfter);
+                fprintf(file, "          }%s\n", (k < account->historyCount - 1) ? "," : "");
+            }
+
+            fprintf(file, "        ]\n");
+            fprintf(file, "      }%s\n", (j < user->accountCount - 1) ? "," : "");
         }
 
         fprintf(file, "    ]\n");
@@ -485,180 +1059,131 @@ void SaveAccountsToFile(const char *filename)
     fprintf(file, "]\n");
 
     fclose(file);
+    printf("데이터가 성공적으로 저장되었습니다: %s\n", filename);
 }
-
+// @param filename 파일 이름
 void LoadAccountsFromFile(const char *filename)
 {
     FILE *file = fopen(filename, "r");
     if (!file)
-        return; // 파일이 없으면 초기 데이터로 시작
+    {
+        printf("파일을 열 수 없습니다: %s. 초기 데이터로 시작합니다.\n", filename);
+        return;
+    }
 
     char line[1024];
-    int inHistory = 0; // history 배열 내부인지 여부 확인
+    User *currentUser = NULL;
+    Account *currentAccount = NULL;
+    Transaction *currentTransaction = NULL;
+    int inAccounts = 0, inHistory = 0;
 
     while (fgets(line, sizeof(line), file))
     {
         if (strstr(line, "\"name\":"))
         {
-            sscanf(line, " \"name\": \"%[^\"]\",", users[userCount].name);
+            currentUser = &users[userCount++];
+            currentUser->accountCount = 0; // 초기화
+            sscanf(line, " \"name\": \"%[^\"]\",", currentUser->name);
         }
-        else if (strstr(line, "\"accountNumber\":"))
+        else if (strstr(line, "\"id\":"))
         {
-            sscanf(line, " \"accountNumber\": \"%[^\"]\",", users[userCount].accountNumber);
+            sscanf(line, " \"id\": \"%[^\"]\",", currentUser->id);
         }
-        else if (strstr(line, "\"openDate\":"))
+        else if (strstr(line, "\"password\":"))
         {
-            sscanf(line, " \"openDate\": \"%[^\"]\",", users[userCount].openDate);
+            sscanf(line, " \"password\": \"%[^\"]\",", currentUser->password);
         }
-        else if (strstr(line, "\"balance\":"))
+        else if (strstr(line, "\"accounts\": ["))
         {
-            sscanf(line, " \"balance\": %lld,", &users[userCount].balance);
+            inAccounts = 1;
         }
-        else if (strstr(line, "\"history\": ["))
+        else if (inAccounts && strstr(line, "\"accountNumber\":"))
         {
-            inHistory = 1; // history 배열 시작
+            currentAccount = &currentUser->account[currentUser->accountCount++];
+            currentAccount->historyCount = 0; // 초기화
+            sscanf(line, " \"accountNumber\": \"%[^\"]\",", currentAccount->accountNumber);
+        }
+        else if (inAccounts && strstr(line, "\"openDate\":"))
+        {
+            sscanf(line, " \"openDate\": \"%[^\"]\",", currentAccount->openDate);
+        }
+        else if (inAccounts && strstr(line, "\"balance\":"))
+        {
+            sscanf(line, " \"balance\": %lld,", &currentAccount->balance);
+        }
+        else if (inAccounts && strstr(line, "\"history\": ["))
+        {
+            inHistory = 1;
         }
         else if (inHistory && strstr(line, "\"date\":"))
         {
-            sscanf(line, " \"date\": \"%[^\"]\",", users[userCount].history[users[userCount].historyCount].date);
+            currentTransaction = &currentAccount->history[currentAccount->historyCount++];
+            sscanf(line, " \"date\": \"%[^\"]\",", currentTransaction->date);
         }
         else if (inHistory && strstr(line, "\"description\":"))
         {
-            sscanf(line, " \"description\": \"%[^\"]\",", users[userCount].history[users[userCount].historyCount].description);
+            sscanf(line, " \"description\": \"%[^\"]\",", currentTransaction->description);
         }
         else if (inHistory && strstr(line, "\"amount\":"))
         {
-            sscanf(line, " \"amount\": %lld,", &users[userCount].history[users[userCount].historyCount].amount);
+            sscanf(line, " \"amount\": %lld,", &currentTransaction->amount);
         }
         else if (inHistory && strstr(line, "\"balanceAfter\":"))
         {
-            sscanf(line, " \"balanceAfter\": %lld,", &users[userCount].history[users[userCount].historyCount].balanceAfter);
-            users[userCount].historyCount++; // 기록 개수 증가
+            sscanf(line, " \"balanceAfter\": %lld,", &currentTransaction->balanceAfter);
         }
         else if (strstr(line, "]"))
-        { // history 배열 종료
-            inHistory = 0;
+        {
+            if (inHistory)
+                inHistory = 0; // history 배열 끝
+            else if (inAccounts)
+                inAccounts = 0; // accounts 배열 끝
         }
         else if (strstr(line, "}"))
         {
-            // 사용자 정보를 다 읽었으면 다음 사용자로 이동
-            if (!inHistory && (users[userCount].historyCount > 0 || strlen(users[userCount].name) > 0))
-            {
-                userCount++;
-            }
+            if (!inHistory && !inAccounts && currentUser != NULL)
+                currentUser = NULL; // 사용자 정보 끝
         }
     }
 
     fclose(file);
+    printf("데이터가 성공적으로 로드되었습니다: %s\n", filename);
 }
 
-void UserLoginToAccount(){
-
-    char id[50];
-
-    PrintCenteredText(2, "===== 로그인 =====");
-    printf("\033[%d;%dH아이디 입력: ", HEIGHT - 2, WIDTH - 30);
-    fgets(id, sizeof(id), stdin);
-
-    //비밀번호 입력
-
-    //Account Permission 조사
-    //Admin, 일반 유저 default 
-
-}
 
 void MainLoop()
 {
+    int loggedInUserIndex = -1; // 로그인 상태 추적 (-1: 로그인되지 않음)
+
     while (1)
     {
-        if (menuState == 0)
+        if (loggedInUserIndex == -1) // 로그인되지 않은 상태
         {
-            PrintMainMenu();
-        }
-        else if (menuState == 1)
-        {
-            PrintUserMenu();
-        }
+            int menuChoice = PrintMainMenu(); // 메인 메뉴 출력 및 선택값 반환
 
-        char input = _getch();
-        if (menuState == 0)
-        {
-            if (input == 'w' || input == 'W')
+            if (menuChoice == 0) // 로그인
             {
-                if (selectedUser > 0)
-                    selectedUser--; // 위로 이동
+                loggedInUserIndex = UserLoginToAccount();
             }
-            else if (input == 's' || input == 'S')
+            else if (menuChoice == 1) // 회원가입
             {
-                if (selectedUser < userCount + 1)
-                    selectedUser++; // 아래로 이동
+                RegisterUser();
             }
-            else if (input == '\r')
-            { // Enter 키
-                if (selectedUser == userCount)
-                {
-                    AddUser();
-                }
-                else if (selectedUser == userCount + 1)
-                {
-                    SaveAccountsToFile(FILENAME);
-                    printf("\033[%d;%dH저장 완료! 프로그램 종료 중...", HEIGHT - 3, WIDTH - 50);
-                    Sleep(2000);
-                    exit(0);
-                }
-                else
-                {
-                    menuState = 1;                                        // 상세 메뉴로 이동
-                    historyCursor = users[selectedUser].historyCount - 1; // 기본 커서 위치: 최신 히스토리
-                    historyOffset = (historyCursor < HEIGHT - 12)
-                                        ? 0
-                                        : historyCursor - (HEIGHT - 12) + 1; // 최신 항목이 보이도록
-                }
+            else if (menuChoice == 2) // 종료
+            {
+                printf("프로그램을 종료합니다.\n");
+                break;
             }
         }
-        else if (menuState == 1)
+        else // 로그인된 상태
         {
-            User *user = &users[selectedUser];
-            if (input == 'q' || input == 'Q')
-            {
-                HandleTransaction(user, 1); // 입금
-            }
-            else if (input == 'e' || input == 'E')
-            {
-                HandleTransaction(user, 0); // 출금
-            }
-            else if (input == 'd' || input == 'D')
-            {
-                HandleTransfer(user); // 송금
-            }
-            else if (input == 'a' || input == 'A')
-            {
-                menuState = 0; // 메인 메뉴로 돌아가기
-            }
-            else if (input == 'w' || input == 'W')
-            {
-                if (historyCursor > 0)
-                {
-                    historyCursor--;
-                    if (historyCursor < historyOffset)
-                    {
-                        historyOffset--; // 화면 위로 스크롤
-                    }
-                }
-            }
-            else if (input == 's' || input == 'S')
-            {
-                if (historyCursor < user->historyCount - 1)
-                {
-                    historyCursor++;
-                    if (historyCursor >= historyOffset + (HEIGHT - 12))
-                    {
-                        historyOffset++; // 화면 아래로 스크롤
-                    }
-                }
-            }
+            UserMenu(&users[loggedInUserIndex]); // 로그인한 사용자 메뉴 호출
+            loggedInUserIndex = -1; // 로그아웃 후 초기화
         }
     }
+
+    // 프로그램 종료 시 JSON 파일에 데이터 저장
+    SaveAccountsToFile("accounts.json");
 }
 
 int main()
@@ -672,7 +1197,7 @@ int main()
     MainLoop();
 
     // 프로그램 종료 시 JSON 파일에 데이터 저장
-    // SaveAccountsToFile(FILENAME);
+    SaveAccountsToFile(FILENAME);
 
     return 0;
 }
