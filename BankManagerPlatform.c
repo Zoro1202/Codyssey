@@ -106,6 +106,8 @@ int HandleMenuInput(int selectedOption, int numOptions)
     }
     else if (input == 27) // ESC 키
     {
+        ClearScreen();
+        DrawUIBorder();
         return -99; // ESC 키 반환 값
     }
 
@@ -244,7 +246,7 @@ void GetCurrentDateWEEK(char *buffer)
 {
     time_t t = time(NULL);
     struct tm *tm_info = localtime(&t); // 컴퓨터 시간
-    strftime(buffer, 20, "%Y-%m-%d [%A]", tm_info);
+    strftime(buffer, 25, "%Y-%m-%d [%A]", tm_info);
 }
 
 // 타이틀 옆에 시간 출력
@@ -704,7 +706,7 @@ void ProcessTransaction(User *user, int isDeposit)
     }
 }
 
-// 송금 유저 선택
+// 송금 계좌 선택
 // @param fromUser 송금할 유저
 void HandleTransfer(User *fromUser)
 {
@@ -764,7 +766,7 @@ void HandleTransfer(User *fromUser)
 
         for (int i = 0; i < userCount; i++)
         {
-            if (&users[i] != fromUser) // 자신 제외
+            //if (&users[i] != fromUser) // 자신 제외
             {
                 if (i == targetUserIndex)
                     printf("\033[%d;5H> %s", 4 + i, users[i].name);
@@ -812,10 +814,12 @@ void HandleTransfer(User *fromUser)
 
         for (int i = 0; i < toUser->accountCount; i++)
         {
-            if (i == toAccountIndex)
-                printf("\033[%d;5H> 계좌번호: %s | 잔액: ₩%lld", 4 + i, toUser->account[i].accountNumber, toUser->account[i].balance);
-            else
-                printf("\033[%d;5H  계좌번호: %s | 잔액: ₩%lld", 4 + i, toUser->account[i].accountNumber, toUser->account[i].balance);
+            //if(fromAccount == toUser->account){ // 송금 계좌 -> 송금 계좌 경우를 방지, 송금 계좌 -> 수취 계좌만 표시 / 선택도
+                if (i == toAccountIndex)
+                    printf("\033[%d;5H> 계좌번호: %s | 잔액: ₩%lld", 4 + i, toUser->account[i].accountNumber, toUser->account[i].balance);
+                else
+                    printf("\033[%d;5H  계좌번호: %s | 잔액: ₩%lld", 4 + i, toUser->account[i].accountNumber, toUser->account[i].balance);
+            //}
         }
 
         printf("\033[%d;5H(ESC로 취소)", HEIGHT - 2);
@@ -935,12 +939,12 @@ void UserMenu(User *user)
 {
     int selectedOption = 0; // 현재 선택된 옵션
     const int numOptions = 6; // 메뉴 옵션 개수
-
+    ClearScreen();
+    DrawUIBorder();
+    PrintCenteredText(2, "===== 사용자 메뉴 =====");
     while (1)
     {
-        ClearScreen();
-        DrawUIBorder();
-        PrintCenteredText(2, "===== 사용자 메뉴 =====");
+        
 
         // 메뉴 옵션
         const char *menuOptions[] = {
@@ -963,6 +967,7 @@ void UserMenu(User *user)
 
         // 키 입력 처리
         char input = _getch();
+        PrintCenteredText(2, "===== 사용자 메뉴 =====");
         if (input == 'w' || input == 'W' || input == 72) // W 또는 위 화살표
         {
             if (selectedOption > 0)
