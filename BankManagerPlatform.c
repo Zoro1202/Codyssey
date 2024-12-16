@@ -864,7 +864,7 @@ void HandleTransfer(User *fromUser)
         else if (inputResult < 0) // Enter 키
         {
             toAccountIndex = -(inputResult + 1);
-            if(toAccountIndex == fromAccountIndex){ // 같은 계좌 막기.ㅇㅇ
+            if(toAccountIndex == fromAccountIndex &&  fromUser->id == users[targetUserIndex].id){ // 같은 계정 같은 계좌 막기.ㅇㅇ
                 printf("\033[%d;5H같은 계좌로는 송금할 수 없습니다.", HEIGHT - 3);
                 Sleep(2000);
                 printf("\033[%d;5H                                            ", HEIGHT - 3);
