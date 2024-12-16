@@ -106,8 +106,6 @@ int HandleMenuInput(int selectedOption, int numOptions)
     }
     else if (input == 27) // ESC 키
     {
-        ClearScreen();
-        DrawUIBorder();
         return -99; // ESC 키 반환 값
     }
 
@@ -348,8 +346,7 @@ void AddAccount(User *user)
     // 사용자 비밀번호 확인
     char inputPassword[50];
     printf("\033[4;5H사용자 계정 비밀번호를 입력하세요: ");
-    fgets(inputPassword, sizeof(inputPassword), stdin);
-    inputPassword[strcspn(inputPassword, "\n")] = 0; // 개행 문자 제거
+    HandleHiddenStringInput(inputPassword, 50);
 
     if (strcmp(inputPassword, user->password) != 0)
     {
@@ -497,16 +494,50 @@ void RegisterUser()
 
     // 1. 사용자 정보 입력
     printf("\033[%d;%dH고객 이름 입력: ", 4, 5);
-    fgets(users[userCount].name, sizeof(users[userCount].name), stdin);
-    users[userCount].name[strcspn(users[userCount].name, "\n")] = 0;
+    fgets(users[userCount].name, sizeof(users[userCount].name), stdin); // handleStringInput은 한글은 처리 못함;
+    users[userCount].name[strcspn(users[userCount].name, "\n")] = 0; // 개행문자 제거
 
-    printf("\033[%d;%dH아이디 입력: ", 5, 5);
-    fgets(users[userCount].id, sizeof(users[userCount].id), stdin);
-    users[userCount].id[strcspn(users[userCount].id, "\n")] = 0;
+    while (1)
+    {
+        printf("\033[%d;%dH아이디 입력(ESC로 뒤로가기): ", 5, 5);
+        if (HandleStringInput(users[userCount].id, sizeof(users[userCount].id)) == -1)
+        {
+            printf("\033[%d;%dH입력이 취소되었습니다.\n", 8, 5);
+            Sleep(2000);
+            return;
+        }
 
-    printf("\033[%d;%dH비밀번호 입력: ", 6, 5);
-    fgets(users[userCount].password, sizeof(users[userCount].password), stdin);
-    users[userCount].password[strcspn(users[userCount].password, "\n")] = 0;
+        // 아이디 중복 확인
+        int isDuplicate = 0;
+        for (int i = 0; i < userCount; i++)
+        {
+            if (strcmp(users[userCount].id, users[i].id) == 0)
+            {
+                isDuplicate = 1;
+                break;
+            }
+        }
+
+        if (isDuplicate)
+        {
+            printf("\033[%d;%dH이미 존재하는 아이디입니다. 다른 아이디를 입력하세요.\n", 6, 5);
+            Sleep(2000);
+            printf("\033[%d;%dH                                                       \n", 6, 5);
+            printf("\033[%d;%dH                                     \n", 5, 5);
+        }
+        else
+        {
+            break; // 중복되지 않으면 루프 종료
+        }
+    }
+
+    printf("\033[%d;%dH비밀번호 입력(ESC로 뒤로가기): ", 6, 5);
+    if (HandleHiddenStringInput(users[userCount].password, sizeof(users[userCount].password)) == -1)
+    {
+        printf("\033[%d;%dH입력이 취소되었습니다.\n", 8, 5);
+        Sleep(2000);
+        return;
+    }
 
     // 초기 계좌 개수 설정
     users[userCount].accountCount = 0;
@@ -575,10 +606,10 @@ void ViewAccounts(User *user)
 
     int selectedAccountIndex = 0;
 
+    ClearScreen();
+    DrawUIBorder();
     while (1)
     {
-        ClearScreen();
-        DrawUIBorder();
         PrintCenteredText(2, "===== 계좌 조회 =====");
 
         // 계좌 목록 출력
@@ -626,10 +657,10 @@ void ProcessTransaction(User *user, int isDeposit)
 
     int selectedAccountIndex = 0;
 
+    ClearScreen();
+    DrawUIBorder();
     while (1)
     {
-        ClearScreen();
-        DrawUIBorder();
         PrintCenteredText(2, isDeposit ? "===== 입금 =====" : "===== 출금 =====");
 
         for (int i = 0; i < user->accountCount; i++)
@@ -661,10 +692,10 @@ void ProcessTransaction(User *user, int isDeposit)
 
     Account *selectedAccount = &user->account[selectedAccountIndex];
 
+    ClearScreen();
+    DrawUIBorder();
     while (1)
     {
-        ClearScreen();
-        DrawUIBorder();
         PrintCenteredText(2, isDeposit ? "===== 입금: 금액 입력 =====" : "===== 출금: 금액 입력 =====");
 
         long long amount = HandleOnlyNumInput("\033[4;5H금액 입력 (ESC로 취소): ", 10);
@@ -720,10 +751,10 @@ void HandleTransfer(User *fromUser)
     // 1. 송금 계좌 선택
     int fromAccountIndex = 0;
 
+    ClearScreen();
+    DrawUIBorder();
     while (1)
     {
-        ClearScreen();
-        DrawUIBorder();
         PrintCenteredText(2, "===== 송금: 송금 계좌 선택 =====");
 
         for (int i = 0; i < fromUser->accountCount; i++)
@@ -758,10 +789,10 @@ void HandleTransfer(User *fromUser)
     // 2. 수취 사용자 선택
     int targetUserIndex = 0;
 
+    ClearScreen();
+    DrawUIBorder();
     while (1)
     {
-        ClearScreen();
-        DrawUIBorder();
         PrintCenteredText(2, "===== 송금: 수취 사용자 선택 =====");
 
         for (int i = 0; i < userCount; i++)
@@ -806,10 +837,10 @@ void HandleTransfer(User *fromUser)
 
     int toAccountIndex = 0;
 
+    ClearScreen();
+    DrawUIBorder();
     while (1)
     {
-        ClearScreen();
-        DrawUIBorder();
         PrintCenteredText(2, "===== 송금: 수취 계좌 선택 =====");
 
         for (int i = 0; i < toUser->accountCount; i++)
@@ -833,6 +864,12 @@ void HandleTransfer(User *fromUser)
         else if (inputResult < 0) // Enter 키
         {
             toAccountIndex = -(inputResult + 1);
+            if(toAccountIndex == fromAccountIndex){ // 같은 계좌 막기.ㅇㅇ
+                printf("\033[%d;5H같은 계좌로는 송금할 수 없습니다.", HEIGHT - 3);
+                Sleep(2000);
+                printf("\033[%d;5H                                            ", HEIGHT - 3);
+                continue;
+            }
             break; // 수취 계좌 선택 완료
         }
         else
@@ -939,11 +976,12 @@ void UserMenu(User *user)
 {
     int selectedOption = 0; // 현재 선택된 옵션
     const int numOptions = 6; // 메뉴 옵션 개수
-    ClearScreen();
+    ClearScreen(); // 화면 초기화
     DrawUIBorder();
-    PrintCenteredText(2, "===== 사용자 메뉴 =====");
     while (1)
     {
+        
+        PrintCenteredText(2, "===== 사용자 메뉴 =====");
         
 
         // 메뉴 옵션
@@ -967,7 +1005,6 @@ void UserMenu(User *user)
 
         // 키 입력 처리
         char input = _getch();
-        PrintCenteredText(2, "===== 사용자 메뉴 =====");
         if (input == 'w' || input == 'W' || input == 72) // W 또는 위 화살표
         {
             if (selectedOption > 0)
@@ -980,6 +1017,8 @@ void UserMenu(User *user)
         }
         else if (input == '\r') // Enter
         {
+            ClearScreen(); // 들어갈때 화면 초기화
+            DrawUIBorder();
             switch (selectedOption)
             {
             case 0: // 계좌 조회
@@ -1000,6 +1039,8 @@ void UserMenu(User *user)
             case 5: // 로그아웃
                 return; // 로그아웃 시 메뉴 종료
             }
+            ClearScreen(); // 나올때 화면 초기화
+            DrawUIBorder();
         }
     }
 }
