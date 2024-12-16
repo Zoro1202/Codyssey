@@ -270,13 +270,38 @@ void PrintCenteredText(int row, char *text)
 void AddCommas(char *buffer, size_t bufferSize, long long number)
 {
     char temp[50];
-    snprintf(temp, sizeof(temp), "%lld", number);
+    int isNegative = 0;
+
+    // 음수 처리
+    if (number < 0)
+    {
+        isNegative = 1;       // 음수 플래그 설정
+        number = -number;     // 절대값으로 변환
+    }
+
+    snprintf(temp, sizeof(temp), "%lld", number); // 숫자를 문자열로 변환
 
     int len = strlen(temp);
+
+    // 숫자가 3자리 이하면 쉼표 없이 그대로 반환
+    if (len <= 3)
+    {
+        if (isNegative)
+        {
+            snprintf(buffer, bufferSize, "-%s", temp);
+        }
+        else
+        {
+            snprintf(buffer, bufferSize, "%s", temp);
+        }
+        return;
+    }
+
+    // 새로운 길이를 계산 (쉼표 포함)
     int commaCount = (len - 1) / 3;
     int newLen = len + commaCount;
 
-    if (newLen >= bufferSize)
+    if (newLen + isNegative >= bufferSize) // 음수 부호 포함 길이 확인
     {
         buffer[0] = '\0'; // 버퍼가 부족하면 빈 문자열 반환
         return;
@@ -285,7 +310,7 @@ void AddCommas(char *buffer, size_t bufferSize, long long number)
     int srcIndex = len - 1;
     int destIndex = newLen - 1;
 
-    buffer[newLen] = '\0'; // 종료 문자
+    buffer[newLen + isNegative] = '\0'; // 종료 문자
 
     int groupCounter = 0;
     while (srcIndex >= 0)
@@ -294,11 +319,18 @@ void AddCommas(char *buffer, size_t bufferSize, long long number)
         groupCounter++;
         if (groupCounter == 3 && srcIndex >= 0)
         {
-            buffer[destIndex--] = ',';
+            buffer[destIndex--] = ','; // 그룹 끝에 쉼표 추가
             groupCounter = 0;
         }
     }
+
+    // 음수 부호 추가
+    if (isNegative)
+    {
+        buffer[destIndex] = '-';
+    }
 }
+
 
 /** 히스토리 추가하기
  * @param account 유저->계좌
@@ -579,8 +611,16 @@ void ViewAccountHistory(Account *account)
             for (int i = 0; i < account->historyCount; i++)
             {
                 Transaction *transaction = &account->history[i];
-                printf("\033[%d;5H[%s] %s | 금액: %lld | 잔액: %lld",
-                       4 + i, transaction->date, transaction->description, transaction->amount, transaction->balanceAfter);
+                char buffer[30]; //addCommas 1000 -> 1,000
+                AddCommas(buffer, 30,transaction->amount);
+                printf("\033[%d;5H[%s] %s | 금액: %s | 잔액: ",
+                        4 + i, 
+                        transaction->date, 
+                        transaction->description, 
+                        buffer);
+                AddCommas(buffer, 30,transaction->balanceAfter);
+                printf("%s", 
+                        buffer);
             }
             printf("\033[%d;5H(ESC로 뒤로가기)", HEIGHT - 2);
         }
@@ -615,10 +655,12 @@ void ViewAccounts(User *user)
         // 계좌 목록 출력
         for (int i = 0; i < user->accountCount; i++)
         {
+            char buffer[30];// AddCommas 1000 -> 1,000
+            AddCommas(buffer, 30, user->account[i].balance);
             if (i == selectedAccountIndex)
-                printf("\033[%d;5H> 계좌번호: %s | 잔액: ₩%lld", 4 + i, user->account[i].accountNumber, user->account[i].balance);
+                printf("\033[%d;5H> 계좌번호: %s | 잔액: ₩%s", 4 + i, user->account[i].accountNumber, buffer);
             else
-                printf("\033[%d;5H  계좌번호: %s | 잔액: ₩%lld", 4 + i, user->account[i].accountNumber, user->account[i].balance);
+                printf("\033[%d;5H  계좌번호: %s | 잔액: ₩%s", 4 + i, user->account[i].accountNumber, buffer);
         }
 
         printf("\033[%d;5H(ESC로 뒤로가기)", HEIGHT - 2);
@@ -634,6 +676,8 @@ void ViewAccounts(User *user)
         {
             selectedAccountIndex = -(inputResult + 1);
             ViewAccountHistory(&user->account[selectedAccountIndex]); // 히스토리 보기
+            ClearScreen();
+            DrawUIBorder();
         }
         else
         {
@@ -665,10 +709,12 @@ void ProcessTransaction(User *user, int isDeposit)
 
         for (int i = 0; i < user->accountCount; i++)
         {
+            char buffer[30];// AddCommas 1000 -> 1,000
+            AddCommas(buffer, 30, user->account[i].balance);
             if (i == selectedAccountIndex)
-                printf("\033[%d;5H> 계좌번호: %s | 잔액: ₩%lld", 4 + i, user->account[i].accountNumber, user->account[i].balance);
+                printf("\033[%d;5H> 계좌번호: %s | 잔액: ₩%s", 4 + i, user->account[i].accountNumber, buffer);
             else
-                printf("\033[%d;5H  계좌번호: %s | 잔액: ₩%lld", 4 + i, user->account[i].accountNumber, user->account[i].balance);
+                printf("\033[%d;5H  계좌번호: %s | 잔액: ₩%s", 4 + i, user->account[i].accountNumber, buffer);
         }
 
         printf("\033[%d;5H(ESC로 취소)", HEIGHT - 2);
@@ -759,10 +805,12 @@ void HandleTransfer(User *fromUser)
 
         for (int i = 0; i < fromUser->accountCount; i++)
         {
+            char buffer[30];// AddCommas 1000 -> 1,000
+            AddCommas(buffer, 30, fromUser->account[i].balance);
             if (i == fromAccountIndex)
-                printf("\033[%d;5H> 계좌번호: %s | 잔액: ₩%lld", 4 + i, fromUser->account[i].accountNumber, fromUser->account[i].balance);
+                printf("\033[%d;5H> 계좌번호: %s | 잔액: ₩%s", 4 + i, fromUser->account[i].accountNumber, buffer);
             else
-                printf("\033[%d;5H  계좌번호: %s | 잔액: ₩%lld", 4 + i, fromUser->account[i].accountNumber, fromUser->account[i].balance);
+                printf("\033[%d;5H  계좌번호: %s | 잔액: ₩%s", 4 + i, fromUser->account[i].accountNumber, buffer);
         }
 
         printf("\033[%d;5H(ESC로 취소)", HEIGHT - 2);
@@ -847,9 +895,9 @@ void HandleTransfer(User *fromUser)
         {
             //if(fromAccount == toUser->account){ // 송금 계좌 -> 송금 계좌 경우를 방지, 송금 계좌 -> 수취 계좌만 표시 / 선택도
                 if (i == toAccountIndex)
-                    printf("\033[%d;5H> 계좌번호: %s | 잔액: ₩%lld", 4 + i, toUser->account[i].accountNumber, toUser->account[i].balance);
+                    printf("\033[%d;5H> 계좌번호: %s | 사용자: %s", 4 + i, toUser->account[i].accountNumber, toUser->name);
                 else
-                    printf("\033[%d;5H  계좌번호: %s | 잔액: ₩%lld", 4 + i, toUser->account[i].accountNumber, toUser->account[i].balance);
+                    printf("\033[%d;5H  계좌번호: %s | 사용자: %s", 4 + i, toUser->account[i].accountNumber, toUser->name);
             //}
         }
 
