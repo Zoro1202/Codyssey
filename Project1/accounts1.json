@@ -1,0 +1,22 @@
+[
+  {
+    "name": "이상영",
+    "id": "lee",
+    "password": "123",
+    "accounts": [
+      {
+        "accountNumber": "081025115844",
+        "openDate": "2025-01-06 08:49",
+        "balance": 1234,
+        "history": [
+          {
+            "date": "2025-01-06 08:49",
+            "description": "입금",
+            "amount": 1234,
+            "balanceAfter": 1234
+          }
+        ]
+      }
+    ]
+  }
+]
