@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <conio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <time.h>
 #include <windows.h>
  
@@ -54,7 +53,7 @@ int menuState = 0; // 0: 메인 메뉴, 1: 사용자 상세 메뉴
 int historyOffset = 0; // 히스토리 표시 시작 인덱스
 int historyCursor = 0; // 현재 커서 위치
 
-// 화면 지우기
+// 화면 지우기 
 void ClearScreen()
 {
     // 다 지우기
@@ -247,7 +246,7 @@ void GetCurrentDateWEEK(char *buffer)
     strftime(buffer, 25, "%Y-%m-%d [%A]", tm_info);
 }
 
-// 타이틀 옆에 시간 출력
+// 타이틀 옆에 시간 출력 (외부 상수 WIDTH)
 // @param row 행(높이)
 void PrintCurrentDate(int row)
 {
@@ -256,7 +255,7 @@ void PrintCurrentDate(int row)
     printf("\033[%d;%dH%s", row + 1, WIDTH - 26, buffer);
 }
 
-// 타이틀 출력(가운데 정렬)
+// 타이틀 출력(가운데 정렬) (외부 상수 WIDTH)
 // @param row 행(높이)
 // @param text "할말"
 void PrintCenteredText(int row, char *text)
@@ -359,7 +358,7 @@ void AddAcountHistory(Account *account, long long amount, const char *descriptio
     account->historyCount++; // 기록 수 증가
 }
 
-// 계좌 개설
+// 계좌 개설 (usercount 필요)
 // @param user 유저
 void AddAccount(User *user)
 {
@@ -402,6 +401,8 @@ void AddAccount(User *user)
         ClearScreen();
         DrawUIBorder();
         PrintCenteredText(2, "===== 계좌 추가 =====");
+        
+        printf("\033[%d;5H(ESC로 뒤로가기)", HEIGHT - 2); //뒤로가기
 
         for (int i = 0; i < numOptions; i++)
         {
@@ -486,7 +487,7 @@ long long GetUserTotalBalance(User *user)
     return totalBalance;
 }
 
-// 유저 정렬 // 돈 많은 순서, 버블 정렬 O(n^2)
+// 유저 정렬 // 돈 많은 순서, 버블 정렬 O(n^2) (Users 필요)
 // TODO - 이진 탐색 구조?로 계좌가 갱신된 유저를 선택적으로 정렬하도록 바꾸기
 void SortUsers()
 {
@@ -510,7 +511,7 @@ void SortUsers()
     }
 }
 
-// 회원가입
+// 회원가입 (userCount, MAX_USERS, users 필요)
 void RegisterUser()
 {
     if (userCount >= MAX_USERS)
@@ -591,7 +592,7 @@ void RegisterUser()
     userCount++;
 }
 
-// 히스토리 출력
+// 히스토리 출력 (HEIGHT 필요)
 void ViewAccountHistory(Account *account)
 {
     while (1)
@@ -633,7 +634,7 @@ void ViewAccountHistory(Account *account)
     }
 }
 
-// 계좌 출력 - 히스토리 창 접근
+// 계좌 출력 - 히스토리 창 접근 HEIGHT 필요
 // @param user 유저
 void ViewAccounts(User *user)
 {
@@ -686,7 +687,7 @@ void ViewAccounts(User *user)
     }
 }
 
-/** 입출금 화면
+/** 입출금 화면 HEIGHT
  * @param user 유저
  * @param isDeposit 0 = 입금, 1 = 출금
  */
@@ -783,7 +784,7 @@ void ProcessTransaction(User *user, int isDeposit)
     }
 }
 
-// 송금 계좌 선택
+// 송금 계좌 선택 userCount, users(이거 쓰지말라고 시발련아...), HEIGHT
 // @param fromUser 송금할 유저
 void HandleTransfer(User *fromUser)
 {
@@ -845,6 +846,7 @@ void HandleTransfer(User *fromUser)
 
         for (int i = 0; i < userCount; i++)
         {
+            // !!!!!!!!!!!!!!!!!! 여기 참조를 이상하게 하고 있음 !!!!!!!!!!!!!!!!!!!!!! 반드시 고쳐!!!!!!!!!!!!!!
             //if (&users[i] != fromUser) // 자신 제외
             {
                 if (i == targetUserIndex)
@@ -974,7 +976,7 @@ void HandleTransfer(User *fromUser)
     }
 }
 
-// 로그인 화면
+// 로그인 화면 users userCount
 // @return 로그인 취소 = -1, 로그인 성공 = 사용자 인덱스
 int UserLoginToAccount()
 {
@@ -1139,8 +1141,8 @@ int PrintMainMenu()
     }
 }
 
-// JSON파일 저장 / 로드
-// @param filename 파일 이름
+// JSON파일 저장 / 로드 
+// @param filename 파일 이름 users userCount historyCount
 void SaveAccountsToFile(const char *filename)
 {
     FILE *file = fopen(filename, "w");
@@ -1192,7 +1194,8 @@ void SaveAccountsToFile(const char *filename)
     fclose(file);
     printf("데이터가 성공적으로 저장되었습니다: %s\n", filename);
 }
-// @param filename 파일 이름
+
+// @param filename 파일 이름 users  historyCount  accountCount
 void LoadAccountsFromFile(const char *filename)
 {
     FILE *file = fopen(filename, "r");
@@ -1281,7 +1284,7 @@ void LoadAccountsFromFile(const char *filename)
     printf("데이터가 성공적으로 로드되었습니다: %s\n", filename);
 }
 
-
+// users
 void MainLoop()
 {
     int loggedInUserIndex = -1; // 로그인 상태 추적 (-1: 로그인되지 않음)
