@@ -1,4 +1,10 @@
-﻿  start.c
-C:\Users\leesa\Desktop\문서\우송대2024\2학년\2학기\lee\Project1\start.c(19,37): warning C4013: 'UserLoginToAccount'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
-C:\Users\leesa\Desktop\문서\우송대2024\2학년\2학기\lee\Project1\start.c(23,17): warning C4013: 'RegisterUser'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
-  Project1.vcxproj -> C:\Users\leesa\Desktop\문서\우송대2024\2학년\2학기\lee\Project1\x64\Debug\Project1.exe
+﻿  Account.c
+  Control.c
+  data.c
+  File.c
+  Menu.c
+  start.c
+  Transaction.c
+  User.c
+  코드를 생성하고 있습니다...
+  Project1.vcxproj -> C:\Users\leesa\Desktop\문서\우송대2024\2학년\2학기\C언어및데이터구조\Project1\x64\Debug\Project1.exe

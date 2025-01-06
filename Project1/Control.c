@@ -218,13 +218,13 @@ void PrintCurrentDate(int row)
 // @param text "할말"
 void PrintCenteredText(int row, char* text)
 {
-    int padding = (WIDTH - strlen(text)) / 2;
+    int padding = (WIDTH - (int)strlen(text)) / 2;
     printf("\033[%d;%dH%s", row, padding, text); // \033[%d;%dH 열 , 행
     PrintCurrentDate(row); // 타이틀 옆에 날짜 출력
 }
 
 // 천의 자리 숫자마다 콤마 찍기
-void AddCommas(char* buffer, size_t bufferSize, long long number)
+void AddCommas(char* buffer, int bufferSize, long long number)
 {
     char temp[50];
     int isNegative = 0;
@@ -238,7 +238,7 @@ void AddCommas(char* buffer, size_t bufferSize, long long number)
 
     snprintf(temp, sizeof(temp), "%lld", number); // 숫자를 문자열로 변환
 
-    int len = strlen(temp);
+    int len = (int)strlen(temp);
 
     // 숫자가 3자리 이하면 쉼표 없이 그대로 반환
     if (len <= 3)

@@ -9,8 +9,8 @@ UserData* getInstance()
 	return &instance;
 }
 
-User* getUsers() {
-    return getInstance()->users;  // 싱글톤 인스턴스 반환
+User *getUsers() {
+    return (getInstance()->users);  // 싱글톤 인스턴스 반환
 }
 
 void setUsers(const User* user, int userCount) {

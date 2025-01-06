@@ -74,12 +74,12 @@ void RegisterUser(UserData *userData)
     // 2. 계좌 개설 여부 확인
     char choice;
     printf("\033[%d;%dH계좌를 개설하시겠습니까? (Y/N): ", 9, 5);
-    scanf(" %c", &choice);
+    scanf("%c", &choice);
     getchar(); // 버퍼 비우기
 
     if (choice == 'Y' || choice == 'y')
     {
-        AddAccount(&users[*userCount]); // 계좌 추가
+        AddAccount(userData); // 계좌 추가
     }
 
     (*userCount)++;
