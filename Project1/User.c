@@ -3,7 +3,7 @@
 #include "std.h"
 
 // 회원가입 (userCount, MAX_USERS, users 필요) dd
-void RegisterUser(UserData *userData)
+void RegisterUser(UserData* userData)
 {
     User* users = userData->users;
     int* userCount = &userData->userCount;

@@ -1,7 +1,7 @@
 //Transaction.c
 //계좌의 거래 내역을 관리.
 #include "std.h"
-#define USERDATA
+
 
 /** 히스토리 추가하기
  * @param account 유저->계좌
@@ -228,7 +228,7 @@ void HandleTransfer(User* fromUser)
     while (1)
     {
         PrintCenteredText(2, "===== 송금: 수취 사용자 선택 =====");
-        
+
         for (int i = 0; i < getInstance()->userCount; i++)
         {
             // !!!!!!!!!!!!!!!!!! 여기 참조를 이상하게 하고 있음 !!!!!!!!!!!!!!!!!!!!!! 반드시 고쳐!!!!!!!!!!!!!! 

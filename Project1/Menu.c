@@ -66,7 +66,7 @@ void UserMenu(User* user)
                 HandleTransfer(user);
                 break;
             case 4: // 계좌 추가
-                AddAccount(user);
+                AddAccount(getInstance());
                 break;
             case 5: // 로그아웃
                 return; // 로그아웃 시 메뉴 종료

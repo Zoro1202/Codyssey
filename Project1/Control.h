@@ -9,4 +9,4 @@ void GetCurrentDateTIME(char* buffer);
 void GetCurrentDateWEEK(char* buffer);
 void PrintCurrentDate(int row);
 void PrintCenteredText(int row, char* text);
-void AddCommas(char* buffer, size_t bufferSize, long long number);
+void AddCommas(char* buffer, int bufferSize, long long number);

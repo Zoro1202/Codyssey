@@ -5,7 +5,7 @@
 
 // 계좌 개설 (usercount 필요)
 // @param user 유저
-void AddAccount(UserData * userData)
+void AddAccount(UserData* userData)
 {
     User* user = userData->users;
     if (user->accountCount >= MAX_ACCOUNT)
@@ -103,7 +103,7 @@ void AddAccount(UserData * userData)
     // 랜덤 시드
     // 겹치는 경우가 많아서 좀 시드의 복잡성을 더함.
     // 랜덤 시드 = 계좌 수(1~) + (은행 코드(0810 => 810) * 날짜(일, 1 ~ 31)) + 유저 이름에 첫번째 ascii 값(32~127?)
-    int randomSeedForAccountnum = ( userData->userCount * user->accountCount) + (atoi(bankCode) * t->tm_mday) + (int)user->name[0];
+    int randomSeedForAccountnum = (userData->userCount * user->accountCount) + (atoi(bankCode) * t->tm_mday) + (int)user->name[0];
     srand(randomSeedForAccountnum);
 
     // 랜덤 6자리 번호 생성
