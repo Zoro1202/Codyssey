@@ -15,10 +15,10 @@ void SaveAccountsToFile(const char* filename)
     }
 
     fprintf(file, "[\n");
-    int userCount = getInstance()->userCount;
+    int userCount = (getInstance()->userCount);
     for (int i = 0; i < userCount; i++)
     {
-        User* user = &getInstance()->users[i];
+        User* user = getUsers();
         fprintf(file, "  {\n");
         fprintf(file, "    \"name\": \"%s\",\n", user->name);
         fprintf(file, "    \"id\": \"%s\",\n", user->id);

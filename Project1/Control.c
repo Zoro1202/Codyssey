@@ -224,7 +224,7 @@ void PrintCenteredText(int row, char* text)
 }
 
 // 천의 자리 숫자마다 콤마 찍기
-void AddCommas(char* buffer, size_t bufferSize, long long number)
+void AddCommas(char* buffer, int bufferSize, long long number)
 {
     char temp[50];
     int isNegative = 0;

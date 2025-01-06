@@ -1,4 +1,366 @@
-﻿  start.c
-C:\Users\leesa\Desktop\문서\우송대2024\2학년\2학기\lee\Project1\start.c(19,37): warning C4013: 'UserLoginToAccount'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
-C:\Users\leesa\Desktop\문서\우송대2024\2학년\2학기\lee\Project1\start.c(23,17): warning C4013: 'RegisterUser'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
-  Project1.vcxproj -> C:\Users\leesa\Desktop\문서\우송대2024\2학년\2학기\lee\Project1\x64\Debug\Project1.exe
+﻿  Account.c
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Account.c(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Account.c(7,26): error C2143: 구문 오류: ')'이(가) '*' 앞에 없습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Account.c(7,26): error C2143: 구문 오류: '{'이(가) '*' 앞에 없습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Account.c(7,36): error C2059: 구문 오류: ')'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Account.c(8,1): error C2054: 'userData' 다음에 '('가 필요합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Account.c(70,9): error C2059: 구문 오류: 'else'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Account.c(74,5): error C2059: 구문 오류: '}'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Account.c(82,5): error C2059: 구문 오류: 'else'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Account.c(90,17): error C2065: 't': 선언되지 않은 식별자입니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Account.c(90,19): error C2223: '->tm_year' 왼쪽은 구조체/공용 구조체를 가리켜야 합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Account.c(95,47): error C2223: '->userCount' 왼쪽은 구조체/공용 구조체를 가리켜야 합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Account.c(95,63): error C2065: 'user': 선언되지 않은 식별자입니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Account.c(95,65): error C2223: '->accountCount' 왼쪽은 구조체/공용 구조체를 가리켜야 합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Account.c(95,82): warning C4013: 'atoi'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Account.c(95,100): error C2065: 't': 선언되지 않은 식별자입니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Account.c(95,102): error C2223: '->tm_mday' 왼쪽은 구조체/공용 구조체를 가리켜야 합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Account.c(95,122): error C2065: 'user': 선언되지 않은 식별자입니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Account.c(95,124): error C2223: '->name' 왼쪽은 구조체/공용 구조체를 가리켜야 합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Account.c(99,28): warning C4013: 'rand'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Account.c(99,15): error C2099: 이니셜라이저가 상수가 아닙니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Account.c(102,23): error C2143: 구문 오류: ')'이(가) '->' 앞에 없습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Account.c(102,23): error C2143: 구문 오류: '{'이(가) '->' 앞에 없습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Account.c(102,23): error C2059: 구문 오류: '->'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Account.c(102,82): error C2059: 구문 오류: ')'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Account.c(105,15): error C2143: 구문 오류: '{'이(가) '->' 앞에 없습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Account.c(105,15): error C2059: 구문 오류: '->'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Account.c(106,15): error C2143: 구문 오류: '{'이(가) '->' 앞에 없습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Account.c(106,15): error C2059: 구문 오류: '->'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Account.c(108,12): error C2143: 구문 오류: ')'이(가) '문자열' 앞에 없습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Account.c(108,12): error C2143: 구문 오류: '{'이(가) '문자열' 앞에 없습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Account.c(108,12): error C2059: 구문 오류: '문자열'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Account.c(108,112): error C2059: 구문 오류: ')'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Account.c(109,11): error C2143: 구문 오류: ')'이(가) '상수' 앞에 없습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Account.c(109,11): error C2143: 구문 오류: '{'이(가) '상수' 앞에 없습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Account.c(109,11): error C2059: 구문 오류: '상수'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Account.c(109,15): error C2059: 구문 오류: ')'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Account.c(110,1): error C2059: 구문 오류: '}'
+  Control.c
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Control.c(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\std.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Menu.h(4,19): error C2143: 구문 오류: ')'이(가) '*' 앞에 없습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Menu.h(4,19): error C2143: 구문 오류: '{'이(가) '*' 앞에 없습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Menu.h(4,25): error C2059: 구문 오류: ')'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Control.c(22,30): error C2065: 'WIDTH': 선언되지 않은 식별자입니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Control.c(26,32): error C2065: 'HEIGHT': 선언되지 않은 식별자입니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Control.c(29,35): error C2065: 'WIDTH': 선언되지 않은 식별자입니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Control.c(34,30): error C2065: 'WIDTH': 선언되지 않은 식별자입니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Control.c(53,5): error C2059: 구문 오류: 'else'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Control.c(56,5): error C2059: 구문 오류: '}'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Control.c(61,5): error C2059: 구문 오류: 'else'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Control.c(64,5): error C2059: 구문 오류: 'return'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Control.c(65,1): error C2059: 구문 오류: '}'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Control.c(88,9): error C2059: 구문 오류: 'else'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Control.c(96,9): error C2059: 구문 오류: 'else'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Control.c(101,5): error C2059: 구문 오류: '}'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Control.c(104,1): error C2059: 구문 오류: '}'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Control.c(125,9): error C2059: 구문 오류: 'else'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Control.c(133,9): error C2059: 구문 오류: 'else'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Control.c(138,5): error C2059: 구문 오류: '}'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Control.c(158,9): error C2059: 구문 오류: 'else'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Control.c(166,9): error C2059: 구문 오류: 'else'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Control.c(171,5): error C2059: 구문 오류: '}'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Control.c(196,44): error C2065: 'WIDTH': 선언되지 않은 식별자입니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Control.c(204,26): error C2065: 'WIDTH': 선언되지 않은 식별자입니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Control.c(204,28): warning C4013: 'strlen'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Control.c(270,1): fatal  error C1004: 예기치 않은 파일의 끝이 나타났습니다.
+  data.c
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\data.c(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\std.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Menu.h(4,19): error C2143: 구문 오류: ')'이(가) '*' 앞에 없습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Menu.h(4,19): error C2143: 구문 오류: '{'이(가) '*' 앞에 없습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Menu.h(4,25): error C2059: 구문 오류: ')'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\data.c(5,17): error C2061: 구문 오류: 식별자 'instance'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\data.c(5,17): error C2059: 구문 오류: ';'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\data.c(7,9): error C2143: 구문 오류: '{'이(가) '*' 앞에 없습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\data.c(9,18): error C2065: 'instance': 선언되지 않은 식별자입니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\data.c(12,5): error C2143: 구문 오류: '{'이(가) '*' 앞에 없습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\data.c(13,27): error C2223: '->users' 왼쪽은 구조체/공용 구조체를 가리켜야 합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\data.c(13,5): warning C4033: 'getUsers'은(는) 값을 반환해야 합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\data.c(16,25): error C2143: 구문 오류: ')'이(가) '*' 앞에 없습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\data.c(16,25): error C2143: 구문 오류: '{'이(가) '*' 앞에 없습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\data.c(16,37): error C2059: 구문 오류: '형식'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\data.c(16,46): error C2059: 구문 오류: ')'
+  File.c
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\std.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Menu.h(4,19): error C2143: 구문 오류: ')'이(가) '*' 앞에 없습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Menu.h(4,19): error C2143: 구문 오류: '{'이(가) '*' 앞에 없습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Menu.h(4,25): error C2059: 구문 오류: ')'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(17,21): warning C4013: 'getInstance'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(17,36): error C2223: '->userCount' 왼쪽은 구조체/공용 구조체를 가리켜야 합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(20,13): error C2065: 'User': 선언되지 않은 식별자입니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(20,13): error C2297: '*': 오른쪽 피연산자의 유형이 'int *'이므로 유효하지 않습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(20,38): error C2223: '->users' 왼쪽은 구조체/공용 구조체를 가리켜야 합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(22,56): error C2223: '->name' 왼쪽은 구조체/공용 구조체를 가리켜야 합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(22,23): warning C4473: 'fprintf': 서식 문자열에 대한 인수가 충분하게 전달되지 않았습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(22,23): message : 자리 표시자 및 해당 매개 변수에는 variadic 인수가 1개 필요하지만 0개가 제공되었습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(22,23): message : 누락된 variadic 인수 1이(가) 서식 문자열 '%s'에 필요합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(23,54): error C2223: '->id' 왼쪽은 구조체/공용 구조체를 가리켜야 합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(23,23): warning C4473: 'fprintf': 서식 문자열에 대한 인수가 충분하게 전달되지 않았습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(23,23): message : 자리 표시자 및 해당 매개 변수에는 variadic 인수가 1개 필요하지만 0개가 제공되었습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(23,23): message : 누락된 variadic 인수 1이(가) 서식 문자열 '%s'에 필요합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(24,60): error C2223: '->password' 왼쪽은 구조체/공용 구조체를 가리켜야 합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(24,23): warning C4473: 'fprintf': 서식 문자열에 대한 인수가 충분하게 전달되지 않았습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(24,23): message : 자리 표시자 및 해당 매개 변수에는 variadic 인수가 1개 필요하지만 0개가 제공되었습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(24,23): message : 누락된 variadic 인수 1이(가) 서식 문자열 '%s'에 필요합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(27,35): error C2223: '->accountCount' 왼쪽은 구조체/공용 구조체를 가리켜야 합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(29,20): error C2065: 'Account': 선언되지 않은 식별자입니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(29,30): error C2065: 'account': 선언되지 않은 식별자입니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(29,39): error C2223: '->account' 왼쪽은 구조체/공용 구조체를 가리켜야 합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(31,74): error C2065: 'account': 선언되지 않은 식별자입니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(31,76): error C2223: '->accountNumber' 왼쪽은 구조체/공용 구조체를 가리켜야 합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(31,27): warning C4473: 'fprintf': 서식 문자열에 대한 인수가 충분하게 전달되지 않았습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(31,27): message : 자리 표시자 및 해당 매개 변수에는 variadic 인수가 1개 필요하지만 0개가 제공되었습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(31,27): message : 누락된 variadic 인수 1이(가) 서식 문자열 '%s'에 필요합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(32,69): error C2065: 'account': 선언되지 않은 식별자입니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(32,71): error C2223: '->openDate' 왼쪽은 구조체/공용 구조체를 가리켜야 합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(32,27): warning C4473: 'fprintf': 서식 문자열에 대한 인수가 충분하게 전달되지 않았습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(32,27): message : 자리 표시자 및 해당 매개 변수에는 variadic 인수가 1개 필요하지만 0개가 제공되었습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(32,27): message : 누락된 variadic 인수 1이(가) 서식 문자열 '%s'에 필요합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(33,66): error C2065: 'account': 선언되지 않은 식별자입니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(33,68): error C2223: '->balance' 왼쪽은 구조체/공용 구조체를 가리켜야 합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(33,27): warning C4473: 'fprintf': 서식 문자열에 대한 인수가 충분하게 전달되지 않았습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(33,27): message : 자리 표시자 및 해당 매개 변수에는 variadic 인수가 1개 필요하지만 0개가 제공되었습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(33,27): message : 누락된 variadic 인수 1이(가) 서식 문자열 '%lld'에 필요합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(36,40): error C2065: 'account': 선언되지 않은 식별자입니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(36,42): error C2223: '->historyCount' 왼쪽은 구조체/공용 구조체를 가리켜야 합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(38,28): error C2065: 'Transaction': 선언되지 않은 식별자입니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(38,42): error C2065: 'transaction': 선언되지 않은 식별자입니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(38,52): error C2065: 'account': 선언되지 않은 식별자입니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(38,54): error C2223: '->history' 왼쪽은 구조체/공용 구조체를 가리켜야 합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(40,77): error C2065: 'transaction': 선언되지 않은 식별자입니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(40,79): error C2223: '->date' 왼쪽은 구조체/공용 구조체를 가리켜야 합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(40,31): warning C4473: 'fprintf': 서식 문자열에 대한 인수가 충분하게 전달되지 않았습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(40,31): message : 자리 표시자 및 해당 매개 변수에는 variadic 인수가 1개 필요하지만 0개가 제공되었습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(40,31): message : 누락된 variadic 인수 1이(가) 서식 문자열 '%s'에 필요합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(41,84): error C2065: 'transaction': 선언되지 않은 식별자입니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(41,86): error C2223: '->description' 왼쪽은 구조체/공용 구조체를 가리켜야 합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(41,31): warning C4473: 'fprintf': 서식 문자열에 대한 인수가 충분하게 전달되지 않았습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(41,31): message : 자리 표시자 및 해당 매개 변수에는 variadic 인수가 1개 필요하지만 0개가 제공되었습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(41,31): message : 누락된 variadic 인수 1이(가) 서식 문자열 '%s'에 필요합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(42,77): error C2065: 'transaction': 선언되지 않은 식별자입니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(42,79): error C2223: '->amount' 왼쪽은 구조체/공용 구조체를 가리켜야 합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(42,31): warning C4473: 'fprintf': 서식 문자열에 대한 인수가 충분하게 전달되지 않았습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(42,31): message : 자리 표시자 및 해당 매개 변수에는 variadic 인수가 1개 필요하지만 0개가 제공되었습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(42,31): message : 누락된 variadic 인수 1이(가) 서식 문자열 '%lld'에 필요합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(43,82): error C2065: 'transaction': 선언되지 않은 식별자입니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(43,84): error C2223: '->balanceAfter' 왼쪽은 구조체/공용 구조체를 가리켜야 합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(43,31): warning C4473: 'fprintf': 서식 문자열에 대한 인수가 충분하게 전달되지 않았습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(43,31): message : 자리 표시자 및 해당 매개 변수에는 variadic 인수가 1개 필요하지만 0개가 제공되었습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(43,31): message : 누락된 variadic 인수 1이(가) 서식 문자열 '%lld'에 필요합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(44,62): error C2065: 'account': 선언되지 않은 식별자입니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(44,64): error C2223: '->historyCount' 왼쪽은 구조체/공용 구조체를 가리켜야 합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(44,31): warning C4473: 'fprintf': 서식 문자열에 대한 인수가 충분하게 전달되지 않았습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(44,31): message : 자리 표시자 및 해당 매개 변수에는 variadic 인수가 1개 필요하지만 0개가 제공되었습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(44,31): message : 누락된 variadic 인수 1이(가) 서식 문자열 '%s'에 필요합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(48,53): error C2223: '->accountCount' 왼쪽은 구조체/공용 구조체를 가리켜야 합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(48,27): warning C4473: 'fprintf': 서식 문자열에 대한 인수가 충분하게 전달되지 않았습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(48,27): message : 자리 표시자 및 해당 매개 변수에는 variadic 인수가 1개 필요하지만 0개가 제공되었습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(48,27): message : 누락된 variadic 인수 1이(가) 서식 문자열 '%s'에 필요합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(71,9): error C2065: 'User': 선언되지 않은 식별자입니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(71,23): error C2065: 'currentUser': 선언되지 않은 식별자입니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(71,29): warning C4047: '=': 'int'의 간접 참조 수준이 'void *'과(와) 다릅니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(71,9): error C2106: '=': 왼쪽 피연산자는 l-value이어야 합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(72,12): error C2065: 'Account': 선언되지 않은 식별자입니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(72,29): error C2065: 'currentAccount': 선언되지 않은 식별자입니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(72,35): warning C4047: '=': 'int'의 간접 참조 수준이 'void *'과(와) 다릅니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(72,12): error C2106: '=': 왼쪽 피연산자는 l-value이어야 합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(73,16): error C2065: 'Transaction': 선언되지 않은 식별자입니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(73,37): error C2065: 'currentTransaction': 선언되지 않은 식별자입니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(73,43): warning C4047: '=': 'int'의 간접 참조 수준이 'void *'과(와) 다릅니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(73,16): error C2106: '=': 왼쪽 피연산자는 l-value이어야 합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(78,13): warning C4013: 'strstr'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(80,25): error C2065: 'currentUser': 선언되지 않은 식별자입니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(80,43): error C2223: '->users' 왼쪽은 구조체/공용 구조체를 가리켜야 합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(80,64): error C2223: '->userCount' 왼쪽은 구조체/공용 구조체를 가리켜야 합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(81,24): error C2065: 'currentUser': 선언되지 않은 식별자입니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(81,26): error C2223: '->accountCount' 왼쪽은 구조체/공용 구조체를 가리켜야 합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(85,61): error C2065: 'currentUser': 선언되지 않은 식별자입니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(85,63): error C2223: '->id' 왼쪽은 구조체/공용 구조체를 가리켜야 합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(85,26): warning C4473: 'sscanf': 서식 문자열에 대한 인수가 충분하게 전달되지 않았습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(85,26): message : 자리 표시자 및 해당 매개 변수에는 variadic 인수가 1개 필요하지만 0개가 제공되었습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(85,26): message : 누락된 variadic 인수 1이(가) 서식 문자열 '%[^\"]'에 필요합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(89,67): error C2065: 'currentUser': 선언되지 않은 식별자입니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(89,69): error C2223: '->password' 왼쪽은 구조체/공용 구조체를 가리켜야 합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(89,26): warning C4473: 'sscanf': 서식 문자열에 대한 인수가 충분하게 전달되지 않았습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(89,26): message : 자리 표시자 및 해당 매개 변수에는 variadic 인수가 1개 필요하지만 0개가 제공되었습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(89,26): message : 누락된 variadic 인수 1이(가) 서식 문자열 '%[^\"]'에 필요합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(97,28): error C2065: 'currentAccount': 선언되지 않은 식별자입니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(97,42): error C2065: 'currentUser': 선언되지 않은 식별자입니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(97,44): error C2223: '->account' 왼쪽은 구조체/공용 구조체를 가리켜야 합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(97,63): error C2065: 'currentUser': 선언되지 않은 식별자입니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(97,65): error C2223: '->accountCount' 왼쪽은 구조체/공용 구조체를 가리켜야 합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(98,27): error C2065: 'currentAccount': 선언되지 않은 식별자입니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(98,29): error C2223: '->historyCount' 왼쪽은 구조체/공용 구조체를 가리켜야 합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(102,70): error C2065: 'currentAccount': 선언되지 않은 식별자입니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(102,72): error C2223: '->openDate' 왼쪽은 구조체/공용 구조체를 가리켜야 합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(102,26): warning C4473: 'sscanf': 서식 문자열에 대한 인수가 충분하게 전달되지 않았습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(102,26): message : 자리 표시자 및 해당 매개 변수에는 variadic 인수가 1개 필요하지만 0개가 제공되었습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(102,26): message : 누락된 variadic 인수 1이(가) 서식 문자열 '%[^\"]'에 필요합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(106,64): error C2065: 'currentAccount': 선언되지 않은 식별자입니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(106,66): error C2223: '->balance' 왼쪽은 구조체/공용 구조체를 가리켜야 합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(106,26): warning C4473: 'sscanf': 서식 문자열에 대한 인수가 충분하게 전달되지 않았습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(106,26): message : 자리 표시자 및 해당 매개 변수에는 variadic 인수가 1개 필요하지만 0개가 제공되었습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(106,26): message : 누락된 variadic 인수 1이(가) 서식 문자열 '%lld'에 필요합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(114,32): error C2065: 'currentTransaction': 선언되지 않은 식별자입니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(114,49): error C2065: 'currentAccount': 선언되지 않은 식별자입니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(114,51): error C2223: '->history' 왼쪽은 구조체/공용 구조체를 가리켜야 합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(114,73): error C2065: 'currentAccount': 선언되지 않은 식별자입니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(114,75): error C2223: '->historyCount' 왼쪽은 구조체/공용 구조체를 가리켜야 합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(115,70): error C2065: 'currentTransaction': 선언되지 않은 식별자입니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(115,72): error C2223: '->date' 왼쪽은 구조체/공용 구조체를 가리켜야 합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(115,26): warning C4473: 'sscanf': 서식 문자열에 대한 인수가 충분하게 전달되지 않았습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(115,26): message : 자리 표시자 및 해당 매개 변수에는 variadic 인수가 1개 필요하지만 0개가 제공되었습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(115,26): message : 누락된 variadic 인수 1이(가) 서식 문자열 '%[^\"]'에 필요합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(119,77): error C2065: 'currentTransaction': 선언되지 않은 식별자입니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(119,79): error C2223: '->description' 왼쪽은 구조체/공용 구조체를 가리켜야 합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(119,26): warning C4473: 'sscanf': 서식 문자열에 대한 인수가 충분하게 전달되지 않았습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(119,26): message : 자리 표시자 및 해당 매개 변수에는 variadic 인수가 1개 필요하지만 0개가 제공되었습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(119,26): message : 누락된 variadic 인수 1이(가) 서식 문자열 '%[^\"]'에 필요합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(123,67): error C2065: 'currentTransaction': 선언되지 않은 식별자입니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(123,69): error C2223: '->amount' 왼쪽은 구조체/공용 구조체를 가리켜야 합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(123,26): warning C4473: 'sscanf': 서식 문자열에 대한 인수가 충분하게 전달되지 않았습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(123,26): message : 자리 표시자 및 해당 매개 변수에는 variadic 인수가 1개 필요하지만 0개가 제공되었습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(123,26): message : 누락된 variadic 인수 1이(가) 서식 문자열 '%lld'에 필요합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(127,73): error C2065: 'currentTransaction': 선언되지 않은 식별자입니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(127,75): error C2223: '->balanceAfter' 왼쪽은 구조체/공용 구조체를 가리켜야 합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(127,26): warning C4473: 'sscanf': 서식 문자열에 대한 인수가 충분하게 전달되지 않았습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(127,26): message : 자리 표시자 및 해당 매개 변수에는 variadic 인수가 1개 필요하지만 0개가 제공되었습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(127,26): message : 누락된 variadic 인수 1이(가) 서식 문자열 '%lld'에 필요합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(134,9): error C2181: if와 짝을 이루지 않는 잘못된 else문입니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(136,58): error C2065: 'currentUser': 선언되지 않은 식별자입니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(136,65): warning C4047: '!=': 'int'의 간접 참조 수준이 'void *'과(와) 다릅니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(137,29): error C2065: 'currentUser': 선언되지 않은 식별자입니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(137,35): warning C4047: '=': 'int'의 간접 참조 수준이 'void *'과(와) 다릅니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\File.c(77): fatal  error C1075: '{': 일치하는 토큰을 찾을 수 없습니다.
+  Menu.c
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Menu.c(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\std.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Menu.h(4,19): error C2143: 구문 오류: ')'이(가) '*' 앞에 없습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Menu.h(4,19): error C2143: 구문 오류: '{'이(가) '*' 앞에 없습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Menu.h(4,25): error C2059: 구문 오류: ')'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Menu.c(7,19): error C2143: 구문 오류: ')'이(가) '*' 앞에 없습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Menu.c(7,19): error C2143: 구문 오류: '{'이(가) '*' 앞에 없습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Menu.c(7,25): error C2059: 구문 오류: ')'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Menu.c(8,1): error C2054: 'user' 다음에 '('가 필요합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Menu.c(47,9): error C2059: 구문 오류: 'else'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Menu.c(72,5): error C2059: 구문 오류: '}'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Menu.c(84,9): error C2001: 상수에 줄 바꿈 문자가 있습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Menu.c(85,9): error C2001: 상수에 줄 바꿈 문자가 있습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Menu.c(112,9): error C2059: 구문 오류: 'else'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Menu.c(116,5): error C2059: 구문 오류: '}'
+  start.c
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\start.c(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\std.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Menu.h(4,19): error C2143: 구문 오류: ')'이(가) '*' 앞에 없습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Menu.h(4,19): error C2143: 구문 오류: '{'이(가) '*' 앞에 없습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Menu.h(4,25): error C2059: 구문 오류: ')'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\start.c(7,34): error C2065: 'FILENAME': 선언되지 않은 식별자입니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\start.c(7,34): warning C4047: '함수': 'const char *'의 간접 참조 수준이 'int'과(와) 다릅니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\start.c(7,26): warning C4024: 'LoadAccountsFromFile': 형식 및 실제 매개 변수 1의 형식이 서로 다릅니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\start.c(18,37): warning C4013: 'UserLoginToAccount'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\start.c(18,56): warning C4013: 'getInstance'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\start.c(20,33): error C2065: 'menuChoice': 선언되지 않은 식별자입니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\start.c(21,17): warning C4013: 'RegisterUser'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\start.c(23,13): error C2181: if와 짝을 이루지 않는 잘못된 else문입니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\start.c(23,33): error C2065: 'menuChoice': 선언되지 않은 식별자입니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\start.c(26,17): error C2043: break가 잘못되었습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\start.c(29,9): error C2059: 구문 오류: 'else'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\start.c(35,2): error C2059: 구문 오류: 'return'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\start.c(36,1): error C2059: 구문 오류: '}'
+  Transaction.c
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\std.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Menu.h(4,19): error C2143: 구문 오류: ')'이(가) '*' 앞에 없습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Menu.h(4,19): error C2143: 구문 오류: '{'이(가) '*' 앞에 없습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Menu.h(4,25): error C2059: 구문 오류: ')'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(11,30): error C2143: 구문 오류: ')'이(가) '*' 앞에 없습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(11,30): error C2143: 구문 오류: '{'이(가) '*' 앞에 없습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(11,51): error C2059: 구문 오류: '형식'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(11,82): error C2059: 구문 오류: ')'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(33,32): error C2143: 구문 오류: ')'이(가) '*' 앞에 없습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(33,32): error C2143: 구문 오류: '{'이(가) '*' 앞에 없습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(33,41): error C2059: 구문 오류: ')'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(34,1): error C2054: 'account' 다음에 '('가 필요합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(76,29): error C2143: 구문 오류: ')'이(가) '*' 앞에 없습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(76,29): error C2143: 구문 오류: '{'이(가) '*' 앞에 없습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(76,41): error C2059: 구문 오류: '형식'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(76,50): error C2059: 구문 오류: ')'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(114,9): error C2059: 구문 오류: 'else'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(118,5): error C2059: 구문 오류: '}'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(122,5): error C2371: 'ClearScreen': 재정의. 기본 형식이 다릅니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Control.h(2,6): message : 'ClearScreen' 선언을 참조하십시오.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(123,5): error C2371: 'DrawUIBorder': 재정의. 기본 형식이 다릅니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Control.h(3,6): message : 'DrawUIBorder' 선언을 참조하십시오.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(124,5): error C2059: 구문 오류: 'while'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(165,1): error C2059: 구문 오류: '}'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(208,9): error C2059: 구문 오류: 'else'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(212,5): error C2059: 구문 오류: '}'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(219,5): error C2371: 'ClearScreen': 재정의. 기본 형식이 다릅니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Control.h(2,6): message : 'ClearScreen' 선언을 참조하십시오.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(220,5): error C2371: 'DrawUIBorder': 재정의. 기본 형식이 다릅니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Control.h(3,6): message : 'DrawUIBorder' 선언을 참조하십시오.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(221,5): error C2059: 구문 오류: 'while'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(244,9): error C2059: 구문 오류: 'else'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(246,13): error C2059: 구문 오류: 'break'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(247,9): error C2059: 구문 오류: '}'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(252,5): error C2059: 구문 오류: '}'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(257,5): error C2059: 구문 오류: 'if'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(266,5): error C2371: 'ClearScreen': 재정의. 기본 형식이 다릅니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Control.h(2,6): message : 'ClearScreen' 선언을 참조하십시오.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(267,5): error C2371: 'DrawUIBorder': 재정의. 기본 형식이 다릅니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Control.h(3,6): message : 'DrawUIBorder' 선언을 참조하십시오.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(268,5): error C2059: 구문 오류: 'while'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(288,9): error C2059: 구문 오류: 'else'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(290,13): error C2059: 구문 오류: 'if'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(296,13): error C2059: 구문 오류: 'break'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(297,9): error C2059: 구문 오류: '}'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(302,5): error C2059: 구문 오류: '}'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(307,5): error C2059: 구문 오류: 'while'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(319,9): error C2059: 구문 오류: 'if'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(326,9): error C2059: 구문 오류: 'if'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(334,20): error C2143: 구문 오류: '{'이(가) '->' 앞에 없습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(334,20): error C2059: 구문 오류: '->'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(335,18): error C2143: 구문 오류: '{'이(가) '->' 앞에 없습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(335,18): error C2059: 구문 오류: '->'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(339,34): error C2059: 구문 오류: '문자열'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(339,60): error C2143: 구문 오류: ')'이(가) '->' 앞에 없습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(339,60): error C2143: 구문 오류: '{'이(가) '->' 앞에 없습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(339,60): error C2059: 구문 오류: '->'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(339,92): error C2059: 구문 오류: ')'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(340,32): error C2059: 구문 오류: '문자열'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(340,60): error C2143: 구문 오류: ')'이(가) '->' 앞에 없습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(340,60): error C2143: 구문 오류: '{'이(가) '->' 앞에 없습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(340,60): error C2059: 구문 오류: '->'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(340,94): error C2059: 구문 오류: ')'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(342,39): error C2059: 구문 오류: '-'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(342,40): error C2146: 구문 오류: ')'이(가) 'amount' 식별자 앞에 없습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(342,40): error C2061: 구문 오류: 식별자 'amount'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(342,40): error C2059: 구문 오류: ';'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(342,46): error C2059: 구문 오류: ','
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(342,63): error C2059: 구문 오류: ')'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(345,16): error C2143: 구문 오류: ')'이(가) '문자열' 앞에 없습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(345,16): error C2143: 구문 오류: '{'이(가) '문자열' 앞에 없습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(345,16): error C2059: 구문 오류: '문자열'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(345,56): error C2059: 구문 오류: ')'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(346,15): error C2143: 구문 오류: ')'이(가) '상수' 앞에 없습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(346,15): error C2143: 구문 오류: '{'이(가) '상수' 앞에 없습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(346,15): error C2059: 구문 오류: '상수'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(346,19): error C2059: 구문 오류: ')'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(347,9): error C2059: 구문 오류: 'return'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Transaction.c(348,5): error C2059: 구문 오류: '}'
+  User.c
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\User.c(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\std.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Menu.h(4,19): error C2143: 구문 오류: ')'이(가) '*' 앞에 없습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Menu.h(4,19): error C2143: 구문 오류: '{'이(가) '*' 앞에 없습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\Menu.h(4,25): error C2059: 구문 오류: ')'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\User.c(6,28): error C2143: 구문 오류: ')'이(가) '*' 앞에 없습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\User.c(6,28): error C2143: 구문 오류: '{'이(가) '*' 앞에 없습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\User.c(6,37): error C2059: 구문 오류: ')'
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\User.c(7,1): error C2054: 'userData' 다음에 '('가 필요합니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\User.c(89,1): error C2449: 파일 범위에 '{'가 있습니다. 함수 헤더가 없는 것 같습니다.
+C:\Users\WSU\Downloads\Codyssey-main\Codyssey-main\Project1\User.c(130,1): error C2059: 구문 오류: '}'
+  코드를 생성하고 있습니다...
