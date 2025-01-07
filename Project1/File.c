@@ -146,3 +146,4 @@ void LoadAccountsFromFile(const char* filename)
     fclose(file);
     printf("데이터가 성공적으로 로드되었습니다: %s\n", filename);
 }
+

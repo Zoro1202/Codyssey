@@ -8,6 +8,7 @@
 #include <string.h>
 #include <time.h>
 #include <windows.h>
+#include <sqlite3.h>
 
 // 상수 관리
 #include "data.h"
