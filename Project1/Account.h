@@ -4,7 +4,7 @@
 ////함수 선언,  변수 extern
 //struct Transaction;
 
-void AddAccount(UserData* userData);
+void AddAccount(User* user);
 void ViewAccounts(User* user);
 
 
